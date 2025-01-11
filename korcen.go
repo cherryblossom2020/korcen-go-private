@@ -1178,3 +1178,55 @@ func Race(input string) bool {
 
 	return false
 }
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Parent(input string) bool {
+	input = strings.ToLower(input)
+	newtext := strings.ReplaceAll(input, " ", "")
+
+	your := []string{"ㄴ1ㄱ", "ㄴ1ㅁ", "느금ㅁ", "ㄴㄱ마", "ㄴㄱ빠", "ㄴ금빠", "ㅇH미", "ㄴ1에미", "늬애미", "@ㅐ미", "@ㅐ비"}
+	for _, item := range your {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "ㄴㄴ", "")
+	input = strings.ReplaceAll(input, "미국", "")
+	your = []string{"ㄴㄱㅁ", "ㄴ금마", "느금ㅁ", "ㄴㄱ마", "ㄴㄱ빠", "ㄴ금빠", "ㄴ미", "늬금마"}
+	for _, item := range your {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "엄창못", "")
+	input = strings.ReplaceAll(input, "l", "ㅣ")
+	input = strings.ReplaceAll(input, "1", "ㅣ")
+	input = strings.ReplaceAll(input, "ㄴㅣ", "니")
+	input = strings.ReplaceAll(input, "ㅇㅣ-ㅣ", "애")
+	input = strings.ReplaceAll(input, "ㅁㅣ", "미")
+	your = []string{"느금마", "느그엄마", "늑엄마", "늑금마", "느그애미", "넉엄마", "느그부모", "느그애비", "느금빠", "느그메", "느그빠", "니미씨", "니미씹",
+		"느그마", "니엄마", "엄창", "엠창", "니미럴", "누굼마", "느금", "내미랄", "내미럴", "엄마없는", "아빠없는", "노에미"}
+	for _, item := range your {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "도", "")
+	motherfuck := []string{"니애미", "노애미", "노앰", "앰뒤련", "애믿쥐",
+		"아버지없는게", "애미없는게", "애비없는게", "어머니없는게", "엄마없네", "니애비", "노애비", "애미없", "애비없", "애미뒤", "애비뒤",
+		"니아빠", "너에미", "눼기미", "뉘귀미", "뉘기미", "뉘김이", "뉘뮈", "뉘미랄", "뉘미럴", "뉘미롤", "뉘밀얼", "뉘밀할", "뉘어미", "뉘에미",
+		"느검마", "늬긔미", "늬기미", "니기미", "니믜창", "니미랄", "니미럴", "니미쒸블", "니미씨펄넘", "니미좃", "니밀할", "니부랑", "니뽕좃",
+		"애미죽", "애미디진"}
+	for _, item := range motherfuck {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return false
+}
