@@ -82,6 +82,8 @@ func ChangeUnicode(unicode string) string {
 	return unicode
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 func General(input string) bool {
 	newtext := strings.ToLower(ChangeUnicode(input))
 
@@ -1095,4 +1097,64 @@ func Sexual(input string) bool {
 	}
 
 	return strings.Contains(input, "freenude")
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Belittle(input string) bool {
+	newtext := strings.ReplaceAll(strings.ToLower(input), " ", "")
+
+	input = strings.ReplaceAll(newtext, "뇬", "련")
+	input = strings.ReplaceAll(input, "놈", "련")
+	input = strings.ReplaceAll(input, "넘", "련")
+	belittling := []string{"10련"}
+	for _, item := range belittling {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = strings.ReplaceAll(newtext, "련", "년")
+	input = strings.ReplaceAll(input, "뇬", "년")
+	input = strings.ReplaceAll(input, "놈", "년")
+	input = strings.ReplaceAll(input, "넘", "년")
+	input = strings.ReplaceAll(input, "러운지", "")
+	input = strings.ReplaceAll(input, "지킬 앤 하이드", "")
+	input = strings.ReplaceAll(input, "지킬앤하이드", "")
+	input = strings.ReplaceAll(input, "지킬 엔 하이드", "")
+	input = strings.ReplaceAll(input, "지킬엔하이드", "")
+	input = strings.ReplaceAll(input, "려운지", "")
+	input = strings.ReplaceAll(input, "무서운지", "")
+	input = strings.ReplaceAll(input, "라운지", "")
+	input = strings.ReplaceAll(input, "운지법", "")
+	input = strings.ReplaceAll(input, "싸운지", "")
+	input = strings.ReplaceAll(input, "운지버섯", "")
+	input = strings.ReplaceAll(input, "운 지린다", "")
+	input = strings.ReplaceAll(input, "깔보다", "")
+	input = strings.ReplaceAll(input, "깔보시", "")
+	input = strings.ReplaceAll(input, "1년", "")
+	input = strings.ReplaceAll(input, "2년", "")
+	input = strings.ReplaceAll(input, "3년", "")
+	input = strings.ReplaceAll(input, "4년", "")
+	input = strings.ReplaceAll(input, "5년", "")
+	input = strings.ReplaceAll(input, "6년", "")
+	input = strings.ReplaceAll(input, "7년", "")
+	input = strings.ReplaceAll(input, "8년", "")
+	input = strings.ReplaceAll(input, "9년", "")
+	input = strings.ReplaceAll(input, "0년", "")
+	input = strings.ReplaceAll(input, "[^가-힣]", "")
+	input = strings.ReplaceAll(input, "더운지역", "")
+	input = strings.ReplaceAll(input, "나따까리", "")
+	belittling = []string{"따까리", "장애년", "찐따년", "싸가지", "창년", "썅년", "버러지", "고아년", "고아년", "개간년", "종간나", "도구년", "걸래년", "썅년", "씹년", "개걸레",
+		"창녀", "머저리", "씹쓰래기", "씹쓰레기", "씹장생", "씹자식", "운지", "급식충", "틀딱충", "조센징", "매국노", "똥꼬충", "진지충", "듣보잡", "개찐따",
+		"한남충", "정신병자", "중생아", "돌팔이", "김치녀", "폰팔이", "틀딱년", "같은년", "개돼중", "쓰글년", "썩을년", "썩글년", "씹할", "거지새끼", "거지쉐뀌",
+		"거지쉑이", "거지쎄끼", "거지쒜리", "걸래가튼", "걸래넘", "걸래년", "걸래놈", "걸레가튼", "걸레년", "그지새끼", "그지새키", "그지색", "기집년", "까진년",
+		"깔보", "난잡년", "빡대가리", "더러운년", "돌아이", "또라이", "장애려", "샹놈", "김치남", "김치녀", "혜지련", "한유남충", "페미나치", "페미년", "꼴페미"}
+	for _, item := range belittling {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return false
 }
