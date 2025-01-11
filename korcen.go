@@ -248,7 +248,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(input, "다시 불안", "")
 	input = strings.ReplaceAll(input, "하시바라 이노스케", "")
 	input = strings.ReplaceAll(input, "할 시", "")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	fuck = []string{"시ㅂ", "시ㅏㄹ", "씨ㅂ", "씨ㅏㄹ", "ㅣ발", "ㅆ발", "ㅅ발", "ㅅㅂ", "ㅆㅂ", "ㅆ바", "ㅅ바",
 		"시ㅂㅏ", "ㅅㅂㅏ", "시ㅏㄹ", "씨ㅏㄹ", "ㅅ불", "ㅆ불", "ㅅ쁠", "ㅆ뿔", "ㅆㅣ발", "ㅅㅟ발", "ㅅㅣㅂㅏ",
 		"ㅣ바알", "ㅅ벌", "^^ㅣ벌", "ㅆ삐라", "씨ㅃ", "^^/발"}
@@ -387,7 +387,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(newtext, "g랄", "지랄")
 	input = strings.ReplaceAll(input, "ji랄", "지랄")
 	input = strings.ReplaceAll(input, "己", "ㄹ")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "있지", "")
 	input = strings.ReplaceAll(input, "없지", "")
 	input = strings.ReplaceAll(input, "하지", "")
@@ -439,7 +439,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(input, "8등신", "")
 	input = strings.ReplaceAll(input, "9등신", "")
 	input = strings.ReplaceAll(input, "붕우유신", "")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "빙", "병")
 	input = strings.ReplaceAll(input, "븅", "병")
 	input = strings.ReplaceAll(input, "등", "병")
@@ -527,7 +527,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(input, "10새", "새끼")
 	input = strings.ReplaceAll(input, "10쉑", "새끼")
 	input = strings.ReplaceAll(input, "🐦", "새")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	sonofbitch = []string{"ㅅㄲ", "ㅅ끼", "ㅆ끼", "색ㄲㅣ", "ㅆㅐㄲㅑ", "ㅆㅐㄲㅣ"}
 	for _, item := range sonofbitch {
 		if strings.Contains(input, item) {
@@ -571,7 +571,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(newtext, "丕", "조")
 	input = strings.ReplaceAll(input, "刀卜", "까")
 	input = regexp.MustCompile(`조 \d+까지`).ReplaceAllString(input, "")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "줫습니다", "")
 	input = strings.ReplaceAll(input, "줫음", "")
 	input = strings.ReplaceAll(input, "줫잖아", "")
@@ -820,7 +820,7 @@ func Sexual(input string) bool {
 	input = strings.ReplaceAll(input, "보지안아", "")
 	input = strings.ReplaceAll(input, "게 보지", "")
 	input = strings.ReplaceAll(input, "어케 보지", "")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "보g", "보지")
 	input = strings.ReplaceAll(input, "하나보지", "")
 	input = strings.ReplaceAll(input, "켜보지", "")
@@ -898,7 +898,7 @@ func Sexual(input string) bool {
 	input = strings.ReplaceAll(input, "일찍 자지", "")
 	input = strings.ReplaceAll(input, "지원", "")
 	input = strings.ReplaceAll(input, "자지금", "")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "자지않", "")
 	input = strings.ReplaceAll(input, "어케자지", "")
 	input = strings.ReplaceAll(input, "자지도마", "")
@@ -945,7 +945,7 @@ func Sexual(input string) bool {
 	input = strings.ReplaceAll(input, "엑섹스", "")
 	input = strings.ReplaceAll(input, "엑", "")
 	input = strings.ReplaceAll(input, "0ㅑ", "야")
-	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	sex = []string{"ㅅㅔㄱ스", "섹ㅅ", "ㅅ스", "세ㄱㅅ", "ㅅㅔㄱㅅ"}
 	for _, item := range sex {
 		if strings.Contains(input, item) {
