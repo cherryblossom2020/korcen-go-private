@@ -1364,3 +1364,76 @@ func Special(input string) bool {
 
 	return false
 }
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Politics(input string) bool {
+	input = strings.ToLower(input)
+	newtext := strings.ReplaceAll(input, " ", "")
+
+	mh := []string{"노시개", "노알라", "뇌사모", "뇌물현", "응디시티"}
+	for _, item := range mh {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	ji := []string{"귀걸이아빠", "달창", "대깨문", "문재앙", "문죄앙", "문죄인", "문크예거", "훠훠훠", "문빠"}
+	for _, item := range ji {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	gh := []string{"근혜어", "길라임", "나대블츠", "닭근혜", "댓통령", "레이디가카",
+		"바쁜벌꿀", "수첩공주", "유신공주", "유체이탈화법", "칠푼이", "쿼터갓"}
+	for _, item := range gh {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	jh := []string{"반인반신", "데미갓", "박정희"}
+	for _, item := range jh {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	cs := []string{"간철수"}
+	for _, item := range cs {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "카카오톡", "")
+	input = strings.ReplaceAll(input, "카톡", "")
+	input = strings.ReplaceAll(input, "카페", "")
+	input = strings.ReplaceAll(input, "하다가", "")
+	input = strings.ReplaceAll(input, "먹다가", "")
+	input = strings.ReplaceAll(input, "카와이", "")
+	input = strings.ReplaceAll(input, "카츠", "")
+	input = strings.ReplaceAll(input, "카레", "")
+	input = strings.ReplaceAll(input, "니가", "")
+	input = strings.ReplaceAll(input, "내가", "")
+	input = strings.ReplaceAll(input, "너가", "")
+	input = strings.ReplaceAll(input, "우리가", "")
+	input = strings.ReplaceAll(input, "너희가", "")
+	input = strings.ReplaceAll(input, "카카오", "")
+	input = strings.ReplaceAll(input, "너희가", "")
+	input = strings.ReplaceAll(input, "카세트", "")
+	input = strings.ReplaceAll(input, "카플레이어", "")
+	input = strings.ReplaceAll(input, "카운터", "")
+	input = strings.ReplaceAll(input, "카정", "")
+	input = strings.ReplaceAll(input, "카드", "")
+	mb := []string{"가카", "이명박근혜", "다스는누구겁니까"}
+	for _, item := range mb {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return false
+}
