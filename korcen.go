@@ -1102,7 +1102,8 @@ func Sexual(input string) bool {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 func Belittle(input string) bool {
-	newtext := strings.ReplaceAll(strings.ToLower(input), " ", "")
+	input = strings.ToLower(input)
+	newtext := strings.ReplaceAll(input, " ", "")
 
 	input = strings.ReplaceAll(newtext, "뇬", "련")
 	input = strings.ReplaceAll(input, "놈", "련")
@@ -1151,6 +1152,25 @@ func Belittle(input string) bool {
 		"거지쉑이", "거지쎄끼", "거지쒜리", "걸래가튼", "걸래넘", "걸래년", "걸래놈", "걸레가튼", "걸레년", "그지새끼", "그지새키", "그지색", "기집년", "까진년",
 		"깔보", "난잡년", "빡대가리", "더러운년", "돌아이", "또라이", "장애려", "샹놈", "김치남", "김치녀", "혜지련", "한유남충", "페미나치", "페미년", "꼴페미"}
 	for _, item := range belittling {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Race(input string) bool {
+	input = strings.ToLower(input)
+	newtext := strings.ReplaceAll(input, " ", "")
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "흑형님", "")
+	nigger := []string{"깜둥이", "흑형", "조센진", "짱개", "짱깨",
+		"짱께", "짱게", "쪽바리", "쪽파리", "빨갱이", "쪽바리", "니그로", "코쟁이", "칭총", "칭챙총", "섬숭이", "왜놈", "짱꼴라", "짱깨", "섬짱깨"}
+	for _, item := range nigger {
 		if strings.Contains(input, item) {
 			return true
 		}
