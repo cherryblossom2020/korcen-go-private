@@ -12,6 +12,23 @@ import (
 //   | | (_| | | | | (_| | |_
 //   |_|\__,_|_| |_|\__,_|\__|
 
+type CheckInfo struct {
+	Detect bool
+	Type   int
+}
+
+const (
+	DNone int = iota
+	DGeneral
+	DMinor
+	DSexual
+	DBelittle
+	DRace
+	DParent
+	DSpecial
+	DPolitics
+)
+
 func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "𝗌", "s")
 	unicode = strings.ReplaceAll(unicode, "𝗌", "s")
@@ -1436,4 +1453,62 @@ func Politics(input string) bool {
 	}
 
 	return false
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Check(input string) CheckInfo {
+	if General(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DGeneral,
+		}
+	}
+	if Minor(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DMinor,
+		}
+	}
+	if Sexual(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DSexual,
+		}
+	}
+	if Belittle(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DBelittle,
+		}
+	}
+	if Race(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DRace,
+		}
+	}
+	if Parent(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DParent,
+		}
+	}
+	if Special(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DSpecial,
+		}
+	}
+	if Politics(input) {
+		return CheckInfo{
+			Detect: true,
+			Type:   DPolitics,
+		}
+	}
+
+	return CheckInfo{
+		Detect: false,
+		Type:   DNone,
+	}
 }
