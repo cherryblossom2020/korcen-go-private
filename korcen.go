@@ -12,74 +12,78 @@ import (
 //   | | (_| | | | | (_| | |_
 //   |_|\__,_|_| |_|\__,_|\__|
 
+func ChangeUnicode(unicode string) string {
+	unicode = strings.ReplaceAll(unicode, "𝗌", "s")
+	unicode = strings.ReplaceAll(unicode, "𝗌", "s")
+	unicode = strings.ReplaceAll(unicode, "𝘴", "s")
+	unicode = strings.ReplaceAll(unicode, "𝙨", "s")
+	unicode = strings.ReplaceAll(unicode, "𝚜", "s")
+	unicode = strings.ReplaceAll(unicode, "𝐬", "s")
+	unicode = strings.ReplaceAll(unicode, "𝑠", "s")
+	unicode = strings.ReplaceAll(unicode, "𝒔", "s")
+	unicode = strings.ReplaceAll(unicode, "𝓈", "s")
+	unicode = strings.ReplaceAll(unicode, "𝓼", "s")
+	unicode = strings.ReplaceAll(unicode, "𝔰", "s")
+	unicode = strings.ReplaceAll(unicode, "𝖘", "s")
+	unicode = strings.ReplaceAll(unicode, "𝕤", "s")
+	unicode = strings.ReplaceAll(unicode, "ｓ", "s")
+	unicode = strings.ReplaceAll(unicode, "ş", "s")
+	unicode = strings.ReplaceAll(unicode, "ⓢ", "s")
+	unicode = strings.ReplaceAll(unicode, "⒮", "s")
+	unicode = strings.ReplaceAll(unicode, "🅢", "s")
+	unicode = strings.ReplaceAll(unicode, "🆂", "s")
+	unicode = strings.ReplaceAll(unicode, "🅂", "s")
+	unicode = strings.ReplaceAll(unicode, "𝑺", "s")
+	unicode = strings.ReplaceAll(unicode, "𝖾", "e")
+	unicode = strings.ReplaceAll(unicode, "𝘦", "e")
+	unicode = strings.ReplaceAll(unicode, "𝙚", "e")
+	unicode = strings.ReplaceAll(unicode, "𝚎", "e")
+	unicode = strings.ReplaceAll(unicode, "𝐞", "e")
+	unicode = strings.ReplaceAll(unicode, "𝑒", "e")
+	unicode = strings.ReplaceAll(unicode, "𝒆", "e")
+	unicode = strings.ReplaceAll(unicode, "ℯ", "e")
+	unicode = strings.ReplaceAll(unicode, "𝓮", "e")
+	unicode = strings.ReplaceAll(unicode, "𝔢", "e")
+	unicode = strings.ReplaceAll(unicode, "𝖊", "e")
+	unicode = strings.ReplaceAll(unicode, "𝕖", "e")
+	unicode = strings.ReplaceAll(unicode, "ｅ", "e")
+	unicode = strings.ReplaceAll(unicode, "ė", "e")
+	unicode = strings.ReplaceAll(unicode, "ⓔ", "e")
+	unicode = strings.ReplaceAll(unicode, "⒠", "e")
+	unicode = strings.ReplaceAll(unicode, "🅔", "e")
+	unicode = strings.ReplaceAll(unicode, "🅴", "e")
+	unicode = strings.ReplaceAll(unicode, "🄴", "e")
+	unicode = strings.ReplaceAll(unicode, "є", "e")
+	unicode = strings.ReplaceAll(unicode, "𝗑", "x")
+	unicode = strings.ReplaceAll(unicode, "𝘹", "x")
+	unicode = strings.ReplaceAll(unicode, "𝙭", "x")
+	unicode = strings.ReplaceAll(unicode, "𝚡", "x")
+	unicode = strings.ReplaceAll(unicode, "𝐱", "x")
+	unicode = strings.ReplaceAll(unicode, "𝑥", "x")
+	unicode = strings.ReplaceAll(unicode, "𝒙", "x")
+	unicode = strings.ReplaceAll(unicode, "𝓍", "x")
+	unicode = strings.ReplaceAll(unicode, "𝔁", "x")
+	unicode = strings.ReplaceAll(unicode, "𝔵", "x")
+	unicode = strings.ReplaceAll(unicode, "𝖝", "x")
+	unicode = strings.ReplaceAll(unicode, "𝕩", "x")
+	unicode = strings.ReplaceAll(unicode, "ｘ", "x")
+	unicode = strings.ReplaceAll(unicode, "ⓧ", "x")
+	unicode = strings.ReplaceAll(unicode, "⒳", "x")
+	unicode = strings.ReplaceAll(unicode, "🅧", "x")
+	unicode = strings.ReplaceAll(unicode, "🆇", "x")
+	unicode = strings.ReplaceAll(unicode, "🅇", "x")
+	unicode = strings.ReplaceAll(unicode, "₨", "rs")
+	unicode = strings.ReplaceAll(unicode, "ų", "u")
+	unicode = strings.ReplaceAll(unicode, "ç", "c")
+	unicode = strings.ReplaceAll(unicode, "Ｆ", "F")
+	unicode = strings.ReplaceAll(unicode, "Ｋ", "K")
+	unicode = strings.ReplaceAll(unicode, "Ｃ", "C")
+	unicode = strings.ReplaceAll(unicode, "Ｕ", "U")
+	return unicode
+}
+
 func General(input string) bool {
-	input = strings.ReplaceAll(input, "𝗌", "s")
-	input = strings.ReplaceAll(input, "𝗌", "s")
-	input = strings.ReplaceAll(input, "𝘴", "s")
-	input = strings.ReplaceAll(input, "𝙨", "s")
-	input = strings.ReplaceAll(input, "𝚜", "s")
-	input = strings.ReplaceAll(input, "𝐬", "s")
-	input = strings.ReplaceAll(input, "𝑠", "s")
-	input = strings.ReplaceAll(input, "𝒔", "s")
-	input = strings.ReplaceAll(input, "𝓈", "s")
-	input = strings.ReplaceAll(input, "𝓼", "s")
-	input = strings.ReplaceAll(input, "𝔰", "s")
-	input = strings.ReplaceAll(input, "𝖘", "s")
-	input = strings.ReplaceAll(input, "𝕤", "s")
-	input = strings.ReplaceAll(input, "ｓ", "s")
-	input = strings.ReplaceAll(input, "ş", "s")
-	input = strings.ReplaceAll(input, "ⓢ", "s")
-	input = strings.ReplaceAll(input, "⒮", "s")
-	input = strings.ReplaceAll(input, "🅢", "s")
-	input = strings.ReplaceAll(input, "🆂", "s")
-	input = strings.ReplaceAll(input, "🅂", "s")
-	input = strings.ReplaceAll(input, "𝑺", "s")
-	input = strings.ReplaceAll(input, "𝖾", "e")
-	input = strings.ReplaceAll(input, "𝘦", "e")
-	input = strings.ReplaceAll(input, "𝙚", "e")
-	input = strings.ReplaceAll(input, "𝚎", "e")
-	input = strings.ReplaceAll(input, "𝐞", "e")
-	input = strings.ReplaceAll(input, "𝑒", "e")
-	input = strings.ReplaceAll(input, "𝒆", "e")
-	input = strings.ReplaceAll(input, "ℯ", "e")
-	input = strings.ReplaceAll(input, "𝓮", "e")
-	input = strings.ReplaceAll(input, "𝔢", "e")
-	input = strings.ReplaceAll(input, "𝖊", "e")
-	input = strings.ReplaceAll(input, "𝕖", "e")
-	input = strings.ReplaceAll(input, "ｅ", "e")
-	input = strings.ReplaceAll(input, "ė", "e")
-	input = strings.ReplaceAll(input, "ⓔ", "e")
-	input = strings.ReplaceAll(input, "⒠", "e")
-	input = strings.ReplaceAll(input, "🅔", "e")
-	input = strings.ReplaceAll(input, "🅴", "e")
-	input = strings.ReplaceAll(input, "🄴", "e")
-	input = strings.ReplaceAll(input, "є", "e")
-	input = strings.ReplaceAll(input, "𝗑", "x")
-	input = strings.ReplaceAll(input, "𝘹", "x")
-	input = strings.ReplaceAll(input, "𝙭", "x")
-	input = strings.ReplaceAll(input, "𝚡", "x")
-	input = strings.ReplaceAll(input, "𝐱", "x")
-	input = strings.ReplaceAll(input, "𝑥", "x")
-	input = strings.ReplaceAll(input, "𝒙", "x")
-	input = strings.ReplaceAll(input, "𝓍", "x")
-	input = strings.ReplaceAll(input, "𝔁", "x")
-	input = strings.ReplaceAll(input, "𝔵", "x")
-	input = strings.ReplaceAll(input, "𝖝", "x")
-	input = strings.ReplaceAll(input, "𝕩", "x")
-	input = strings.ReplaceAll(input, "ｘ", "x")
-	input = strings.ReplaceAll(input, "ⓧ", "x")
-	input = strings.ReplaceAll(input, "⒳", "x")
-	input = strings.ReplaceAll(input, "🅧", "x")
-	input = strings.ReplaceAll(input, "🆇", "x")
-	input = strings.ReplaceAll(input, "🅇", "x")
-	input = strings.ReplaceAll(input, "₨", "rs")
-	input = strings.ReplaceAll(input, "ų", "u")
-	input = strings.ReplaceAll(input, "ç", "c")
-	input = strings.ReplaceAll(input, "Ｆ", "F")
-	input = strings.ReplaceAll(input, "Ｋ", "K")
-	input = strings.ReplaceAll(input, "Ｃ", "C")
-	input = strings.ReplaceAll(input, "Ｕ", "U")
-	newtext := strings.ToLower(input)
+	newtext := strings.ToLower(ChangeUnicode(input))
 
 	input = strings.ReplaceAll(newtext, "ㅗ먹어", "ㅗ")
 	input = strings.ReplaceAll(input, "오ㅗㅗ", "")
@@ -312,7 +316,7 @@ func General(input string) bool {
 	input = strings.ReplaceAll(input, "이", "")
 	input = strings.ReplaceAll(input, "일", "")
 	input = strings.ReplaceAll(input, "의", "")
-	input = regexp.MustCompile(`[^가-힣]`).ReplaceAllString(input, "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "즉시발급", "")
 	input = strings.ReplaceAll(input, "련", "놈")
 	input = strings.ReplaceAll(input, "뇬", "놈")
@@ -724,7 +728,7 @@ func Minor(input string) bool {
 		}
 	}
 
-	input = strings.ReplaceAll(input, "[^가-힣]", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	picking := []string{"꼽냐", "꼽니", "꼽나"}
 	for _, item := range picking {
 		if strings.Contains(input, item) {
@@ -751,4 +755,344 @@ func Minor(input string) bool {
 	}
 
 	return false
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Sexual(input string) bool {
+	newtext := strings.ToLower(ChangeUnicode(input))
+
+	input = strings.ReplaceAll(input, " ", "")
+	pussy := []string{"ⓑⓞⓩⓘ", "bozi", "보ㅈㅣ"}
+	for _, item := range pussy {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = strings.ReplaceAll(newtext, "보지도 못", "")
+	input = strings.ReplaceAll(input, "보지도 않", "")
+	input = strings.ReplaceAll(input, "인가 보지", "")
+	input = strings.ReplaceAll(input, "면접 보지", "")
+	input = strings.ReplaceAll(input, "영화 보지", "")
+	input = strings.ReplaceAll(input, "애니 보지", "")
+	input = strings.ReplaceAll(input, "만화 보지", "")
+	input = strings.ReplaceAll(input, "사진 보지", "")
+	input = strings.ReplaceAll(input, "그림 보지", "")
+	input = strings.ReplaceAll(input, "면접보지", "")
+	input = strings.ReplaceAll(input, "영화보지", "")
+	input = strings.ReplaceAll(input, "애니보지", "")
+	input = strings.ReplaceAll(input, "만화보지", "")
+	input = strings.ReplaceAll(input, "사진보지", "")
+	input = strings.ReplaceAll(input, "그림보지", "")
+	input = strings.ReplaceAll(input, "을 보지", "")
+	input = strings.ReplaceAll(input, "나 보지", "")
+	input = strings.ReplaceAll(input, "못 보지", "")
+	input = strings.ReplaceAll(input, "안 보지", "")
+	input = strings.ReplaceAll(input, "왜 보지", "")
+	input = strings.ReplaceAll(input, "뭐 보지", "")
+	input = strings.ReplaceAll(input, "다 보지", "")
+	input = strings.ReplaceAll(input, "빨리 보지", "")
+	input = strings.ReplaceAll(input, "보지도 마", "")
+	input = strings.ReplaceAll(input, "보지는 않", "")
+	input = strings.ReplaceAll(input, "보지안으", "")
+	input = strings.ReplaceAll(input, "보지안아", "")
+	input = strings.ReplaceAll(input, "게 보지", "")
+	input = strings.ReplaceAll(input, "어케 보지", "")
+	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = strings.ReplaceAll(input, "보g", "보지")
+	input = strings.ReplaceAll(input, "하나보지", "")
+	input = strings.ReplaceAll(input, "켜보지", "")
+	input = strings.ReplaceAll(input, "보지맙", "")
+	input = strings.ReplaceAll(input, "초보지", "")
+	input = strings.ReplaceAll(input, "로보지", "")
+	input = strings.ReplaceAll(input, "가보지", "")
+	input = strings.ReplaceAll(input, "홍보지", "")
+	input = strings.ReplaceAll(input, "서보지", "")
+	input = strings.ReplaceAll(input, "보지금", "")
+	input = strings.ReplaceAll(input, "보지못", "")
+	input = strings.ReplaceAll(input, "정지금", "")
+	input = strings.ReplaceAll(input, "걸보지", "")
+	input = strings.ReplaceAll(input, "보지는", "")
+	input = strings.ReplaceAll(input, "보지지", "")
+	input = strings.ReplaceAll(input, "보지않", "")
+	input = strings.ReplaceAll(input, "해보지", "")
+	input = strings.ReplaceAll(input, "보지마", "")
+	input = strings.ReplaceAll(input, "보지말", "")
+	input = strings.ReplaceAll(input, "안보지만", "")
+	input = strings.ReplaceAll(input, "정보", "")
+	input = strings.ReplaceAll(input, "지팡이", "")
+	input = strings.ReplaceAll(input, "행보", "")
+	input = strings.ReplaceAll(input, "바보지", "")
+	input = strings.ReplaceAll(input, "바보짓", "")
+	input = strings.ReplaceAll(input, "물어보지", "")
+	input = strings.ReplaceAll(input, "하시나보지", "")
+	input = strings.ReplaceAll(input, "오", "")
+	pussy = []string{"보지", "버지물", "버짓물", "보짓", "ⓑⓞⓩⓘ",
+		"bozi", "개보즤", "개보지", "버지벌렁벌렁", "보짖", "뵤즤", "봊이"}
+	for _, item := range pussy {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	dicks := []string{"ja지"}
+	for _, item := range dicks {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole := []string{"ㅈㅈ빨", "자ㅈ", "ㅈ지빨"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = strings.ReplaceAll(newtext, "언제 자지", "")
+	input = strings.ReplaceAll(input, "언제자지", "")
+	input = strings.ReplaceAll(input, "잠 자지", "")
+	input = strings.ReplaceAll(input, "자지 말자고", "")
+	input = strings.ReplaceAll(input, " 지급", "")
+	input = strings.ReplaceAll(input, "남자지", "")
+	input = strings.ReplaceAll(input, "여자지", "")
+	input = strings.ReplaceAll(input, "감자지", "")
+	input = strings.ReplaceAll(input, "왁자지", "")
+	input = strings.ReplaceAll(input, "자지러", "")
+	input = strings.ReplaceAll(input, "개발자", "")
+	input = strings.ReplaceAll(input, "관리자", "")
+	input = strings.ReplaceAll(input, "약탈자", "")
+	input = strings.ReplaceAll(input, "타자지", "")
+	input = strings.ReplaceAll(input, "혼자", "")
+	input = strings.ReplaceAll(input, "자지원", "")
+	input = strings.ReplaceAll(input, "사용자", "")
+	input = strings.ReplaceAll(input, "경력자", "")
+	input = strings.ReplaceAll(input, "지식", "")
+	input = strings.ReplaceAll(input, "자지마", "")
+	input = strings.ReplaceAll(input, "자지말", "")
+	input = strings.ReplaceAll(input, "지원자", "")
+	input = strings.ReplaceAll(input, "부자지", "")
+	input = strings.ReplaceAll(input, "혜자지", "")
+	input = strings.ReplaceAll(input, "잘 자지", "")
+	input = strings.ReplaceAll(input, "일자지", "")
+	input = strings.ReplaceAll(input, "일찍 자지", "")
+	input = strings.ReplaceAll(input, "지원", "")
+	input = strings.ReplaceAll(input, "자지금", "")
+	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	input = strings.ReplaceAll(input, "자지않", "")
+	input = strings.ReplaceAll(input, "어케자지", "")
+	input = strings.ReplaceAll(input, "자지도마", "")
+	input = strings.ReplaceAll(input, "자지는않", "")
+	input = strings.ReplaceAll(input, "자지좀마", "")
+	input = strings.ReplaceAll(input, "안자지", "")
+	input = strings.ReplaceAll(input, "못자지", "")
+	input = strings.ReplaceAll(input, "자지금", "")
+	input = strings.ReplaceAll(input, "지건", "")
+	input = strings.ReplaceAll(input, "감자", "")
+	input = strings.ReplaceAll(input, "아", "")
+	dicks = []string{"자지", "자짓", "잦이", "쟈지"}
+	for _, item := range dicks {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = strings.ReplaceAll(newtext, "cess", "")
+	input = strings.ReplaceAll(input, "```css", "")
+	input = strings.ReplaceAll(input, "ex)", "")
+	input = strings.ReplaceAll(input, "exit", "")
+	input = strings.ReplaceAll(input, "ext", "")
+	input = strings.ReplaceAll(input, "images", "")
+	input = strings.ReplaceAll(input, "https", "")
+	input = strings.ReplaceAll(input, "(ex", "")
+	input = strings.ReplaceAll(input, ".ex", "")
+	input = strings.ReplaceAll(input, "physics", "")
+	input = strings.ReplaceAll(input, "features", "")
+	input = strings.ReplaceAll(input, "exam", "")
+	input = strings.ReplaceAll(input, "phase", "")
+	input = strings.ReplaceAll(input, "except", "")
+	input = strings.ReplaceAll(input, "sexual", "")
+	input = strings.ReplaceAll(input, "sexy", "")
+	input = strings.ReplaceAll(input, "[^a-z]", "")
+	sex := []string{"sex", "s스", "x스", "se스", "se스", "s스",
+		"ㅅㅅ", "s하고e싶다x", "ㅅㅔㅅㄱ", "이=스", "ㅇl=스"}
+	for _, item := range sex {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = regexp.MustCompile(`\^`).ReplaceAllString(newtext, "ㅅ")
+	input = strings.ReplaceAll(input, "엑섹스", "")
+	input = strings.ReplaceAll(input, "엑", "")
+	input = strings.ReplaceAll(input, "0ㅑ", "야")
+	input = strings.ReplaceAll(input, "[^ㄱ-힣]", "")
+	sex = []string{"ㅅㅔㄱ스", "섹ㅅ", "ㅅ스", "세ㄱㅅ", "ㅅㅔㄱㅅ"}
+	for _, item := range sex {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = strings.ReplaceAll(input, "야스오", "")
+	input = strings.ReplaceAll(input, "크시야", "")
+	input = strings.ReplaceAll(input, "카구야", "")
+	input = strings.ReplaceAll(input, "스파이", "")
+	input = strings.ReplaceAll(input, "말이야", "")
+	input = strings.ReplaceAll(input, "스티브", "")
+	input = strings.ReplaceAll(input, "스쿼드", "")
+	input = strings.ReplaceAll(input, "파랑색", "")
+	input = strings.ReplaceAll(input, "오야스미", "")
+	input = strings.ReplaceAll(input, "노란색", "")
+	input = strings.ReplaceAll(input, "빨간색", "")
+	input = strings.ReplaceAll(input, "초록색", "")
+	input = strings.ReplaceAll(input, "보라색", "")
+	input = strings.ReplaceAll(input, "청색", "")
+	input = strings.ReplaceAll(input, "보라색", "")
+	input = strings.ReplaceAll(input, "핑크색", "")
+	input = strings.ReplaceAll(input, "남색", "")
+	input = strings.ReplaceAll(input, "검은색", "")
+	input = strings.ReplaceAll(input, "하양색", "")
+	input = strings.ReplaceAll(input, "주황색", "")
+	input = strings.ReplaceAll(input, "연두색", "")
+	input = strings.ReplaceAll(input, "스공", "")
+	input = strings.ReplaceAll(input, "스시", "")
+	input = strings.ReplaceAll(input, "스키장", "")
+	input = strings.ReplaceAll(input, "스킨", "")
+	input = strings.ReplaceAll(input, "스킬", "")
+	input = strings.ReplaceAll(input, "스틸", "")
+	input = strings.ReplaceAll(input, "스탑", "")
+	input = strings.ReplaceAll(input, "스트레스", "")
+	input = strings.ReplaceAll(input, "해야", "")
+	input = strings.ReplaceAll(input, "카시야스", "")
+	input = strings.ReplaceAll(input, "야스톤", "")
+	input = strings.ReplaceAll(input, "유니섹스", "")
+	input = strings.ReplaceAll(input, "스튜디오", "")
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
+	sex = []string{"섹스", "섻", "쉑스", "섿스", "섹그", "야스", "색스", "셱스", "섁스", "세엑스", "썩스", "섹수", "섹파", "섹하자", "쉐스", "쉑스", "쉐엑스", "색수", "세엑수우", "섹하고",
+		"섹하구", "섹하자", "섹하장", "섹하쟈", "섹한번", "쌕스"}
+	for _, item := range sex {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	dick := []string{"꼬3", "꼬툭튀", "꼬톡튀"}
+	for _, item := range dick {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	fireegg := []string{"불알", "부랄", "뽕알", "뿅알", "뿌랄", "뿔알", "개부달",
+		"개부랄", "개부러럴", "개부럴", "개부뢀", "개부알", "개불알", "똘추", "똥구멍", "부라랄"}
+	for _, item := range fireegg {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"오나홍", "오나홀", "ㅇㄴ홀", "텐가", "바이브레이터", "오ㄴ홀", "ㅇ나홀"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	sex = []string{"씹하다"}
+	for _, item := range sex {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"매춘부", "성노예"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"자궁문신"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"모유물", "로리물", "근친상간", "룸섹스", "원조교재", "속박플레이", "야외플레이"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "위대한", "")
+	input = strings.ReplaceAll(input, "소유자", "")
+	input = strings.ReplaceAll(input, "작업자", "")
+	input = strings.ReplaceAll(input, "자기위로", "자위")
+	input = strings.ReplaceAll(input, "위대하지", "")
+	input = strings.ReplaceAll(input, "암살자", "")
+	input = strings.ReplaceAll(input, "학자", "")
+	onahole = []string{"딸딸이", "질싸", "안에사정", "자위남", "자위녀", "폰섹", "포르노", "폰세엑", "폰쉑", "폰쎅", "질내사정", "그룹섹", "남창", "男色", "누워라이년아",
+		"누웠냐씨방새", "다리벌려", "대줄년", "뒤로너어줘", "딸따뤼", "딸쳐", "떡쳐라", "막대쑤셔줘", "막대핥아줘", "먹고보니내딸", "먹고보니누나", "먹고보니딸",
+		"먹고보니똥개", "먹고보니엄마", "먹고보니응아", "먹고보니재수", "먹고보니처제", "먹고보니형수", "몸뚱이줄께", "몸안에사정", "밖에다쌀께", "박고빼고",
+		"배위에싸죠", "몸의대화", "섹할", "섹해"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	onahole = []string{"g스팟", "지스팟"}
+	for _, item := range onahole {
+		if strings.Contains(newtext, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"크리토리스", "클리토리스", "페니스", "애널"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	onahole = []string{"젖까", "젖가튼", "젖나", "젖만"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	onahole = []string{"ja위"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "개발자", "")
+	input = strings.ReplaceAll(input, "관리자", "")
+	input = strings.ReplaceAll(input, "약탈자", "")
+	input = strings.ReplaceAll(input, "사용자", "")
+	input = strings.ReplaceAll(input, "지원자", "")
+	input = strings.ReplaceAll(input, "위대한", "")
+	input = strings.ReplaceAll(input, "소유자", "")
+	input = strings.ReplaceAll(input, "작업자", "")
+	input = strings.ReplaceAll(input, "자기위로", "자위")
+	onahole = []string{"자위", "고자새끼", "고츄", "꺼추", "꼬추"}
+	for _, item := range onahole {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return strings.Contains(input, "freenude")
 }
