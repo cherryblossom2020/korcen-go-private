@@ -1116,6 +1116,15 @@ func Sexual(input string) bool {
 		}
 	}
 
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, ".", "")
+	moan := []string{"헤으응", "헤응", "헤윾", "헤윽", "하앙", "하윾", "하윽"}
+	for _, item := range moan {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
 	return strings.Contains(input, "freenude")
 }
 
