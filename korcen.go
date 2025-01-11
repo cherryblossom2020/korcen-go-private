@@ -690,3 +690,65 @@ func General(input string) bool {
 
 	return false
 }
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+func Minor(input string) bool {
+	newtext := strings.ToLower(input)
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, " ", "")
+	input = strings.ReplaceAll(input, "년", "놈")
+	input = strings.ReplaceAll(input, "련", "놈")
+	damnit := []string{"ㅁㅊ", "ㅁ친", "ㅁ쳤", "aㅣ친", "me친", "미ㅊ", "DI친"}
+	for _, item := range damnit {
+		if strings.Contains(input, item+"놈") {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
+	input = strings.ReplaceAll(input, "거미", "")
+	input = strings.ReplaceAll(input, "친구", "")
+	input = strings.ReplaceAll(input, "개미", "")
+	input = strings.ReplaceAll(input, "이미친", "")
+	input = strings.ReplaceAll(input, "미친증", "")
+	input = strings.ReplaceAll(input, "동그라미", "")
+	input = strings.ReplaceAll(input, "미틴", "미친")
+	input = strings.ReplaceAll(input, "년", "놈")
+	input = strings.ReplaceAll(input, "련", "놈")
+	damnit = []string{"미친놈", "미친새끼"}
+	for _, item := range damnit {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = strings.ReplaceAll(input, "[^가-힣]", "")
+	picking := []string{"꼽냐", "꼽니", "꼽나"}
+	for _, item := range picking {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
+	input = strings.ReplaceAll(input, "뒤져봐야", "")
+	input = strings.ReplaceAll(input, "뒤질뻔", "")
+	input = strings.ReplaceAll(input, "뒤져보다", "")
+	input = strings.ReplaceAll(input, "뒤져보는", "")
+	input = strings.ReplaceAll(input, "뒤져보고", "")
+	input = strings.ReplaceAll(input, "뒤져간다", "")
+	input = strings.ReplaceAll(input, "뒤져서", "")
+	input = strings.ReplaceAll(input, "뒤져본", "")
+	input = strings.ReplaceAll(input, "뒤져봄", "")
+	input = strings.ReplaceAll(input, "뒤져볼", "")
+	picking = []string{"뒤져", "뒈져", "뒈진", "뒈질", "디져라", "디진다", "디질래", "뒤질"}
+	for _, item := range picking {
+		if strings.Contains(input, item) {
+			return true
+		}
+	}
+
+	return false
+}
