@@ -20,7 +20,9 @@
 https://github.com/Tanat05/korcen
 ---------------------------------
 !The code below is a Go translation of the code written by "Tanat05," and all copyrights are owned by "Tanat05."
+!The license for this project also follows Apache-2.0.
 ```
+![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
 Copyright© All rights reserved.
 
