@@ -19,7 +19,7 @@
 ```
 https://github.com/Tanat05/korcen
 ---------------------------------
-!아래 코드는 "Tanat05"가 작성한 코드를 Go 언어로 변환한 것이며, 모든 저작권은 "Tanat05"에게 있습니다.
+!아래 코드는 "Tanat05"가 작성한 코드를 Go 언어로 변환한 것이며
 !해당 프로젝트의 라이센스 또한 Apache-2.0 을 따르고 있습니다
 ```
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
