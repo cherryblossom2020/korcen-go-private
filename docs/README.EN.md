@@ -13,20 +13,20 @@
   </h2>
 </div>
 
-# 제작자
+# Maker
 
 >[Tanat05](https://github.com/Tanat05) / [korcen](https://github.com/Tanat05/korcen)
 ```
 https://github.com/Tanat05/korcen
 ---------------------------------
-!아래 코드는 "Tanat05"가 작성한 코드를 Go 언어로 변환한 것이며, 모든 저작권은 "Tanat05"에게 있습니다.
+!The code below is a Go translation of the code written by "Tanat05," and all copyrights are owned by "Tanat05."
 ```
 
 Copyright© All rights reserved.
 
 ---
 
-# 설치 방법
+# Installation
 
 >mod
 ```sh
