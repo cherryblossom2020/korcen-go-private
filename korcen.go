@@ -13,10 +13,12 @@ import (
 //   |_|\__,_|_| |_|\__,_|\__|
 
 type CheckInfo struct {
-	Detect bool
-	Type   int
+	Detect bool   // 비속어 감지 여부
+	Swear  string // 감지된 비속어
+	Type   int    // 비속어의 유형
 }
 
+// 비속어의 유형
 const (
 	DNone int = iota
 	DGeneral
@@ -103,8 +105,16 @@ func ChangeUnicode(unicode string) string {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func General(input string) bool {
+// 일반적인 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func General(input string) (bool, string) {
 	newtext := strings.ToLower(ChangeUnicode(input))
 
 	input = strings.ReplaceAll(newtext, "ㅗ먹어", "ㅗ")
@@ -176,14 +186,14 @@ func General(input string) bool {
 		"_/_", "⊥", "_ |\\_", "_|\\_", "_ㅣ\\_", "_I_", "丄"}
 	for _, item := range fuckyou {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	fuck := []string{"tq", "qt"}
 	for _, item := range fuck {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 	input = strings.ReplaceAll(newtext, "118", "")
@@ -210,7 +220,7 @@ func General(input string) bool {
 
 	for _, item := range fuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`\^`).ReplaceAllString(newtext, "ㅅ")
@@ -255,7 +265,7 @@ func General(input string) bool {
 
 	for _, item := range fuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -356,7 +366,7 @@ func General(input string) bool {
 
 	for _, item := range fuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -369,7 +379,7 @@ func General(input string) bool {
 
 	for _, item := range fuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -380,7 +390,7 @@ func General(input string) bool {
 
 	for _, item := range bullshit1 {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -406,7 +416,7 @@ func General(input string) bool {
 
 	for _, item := range bullshit1 {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -424,7 +434,7 @@ func General(input string) bool {
 
 	for _, item := range bullshit2 {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -456,7 +466,7 @@ func General(input string) bool {
 
 	for _, item := range asshole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -467,7 +477,7 @@ func General(input string) bool {
 
 	for _, item := range asshole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -479,7 +489,7 @@ func General(input string) bool {
 
 	for _, item := range motherfucker {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -496,21 +506,21 @@ func General(input string) bool {
 	input = strings.ReplaceAll(input, "계속꺼져", "")
 	input = strings.ReplaceAll(input, "꺼져가", "")
 	if strings.Contains(input, "꺼져") {
-		return true
+		return true, "꺼져"
 	}
 
 	input = regexp.MustCompile(`[^가-힣]`).ReplaceAllString(newtext, "")
 	shit := []string{"엿같", "엿가튼", "엿먹어", "뭣같은"}
 	for _, item := range shit {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	sonofbitch := []string{"rotorl", "rotprl", "sib새", "AH끼", "sㅐ끼", "x끼"}
 	for _, item := range sonofbitch {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -531,7 +541,7 @@ func General(input string) bool {
 	sonofbitch = []string{"ㅅㄲ", "ㅅ끼", "ㅆ끼", "색ㄲㅣ", "ㅆㅐㄲㅑ", "ㅆㅐㄲㅣ"}
 	for _, item := range sonofbitch {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -558,14 +568,14 @@ func General(input string) bool {
 		"십새꺄", "십새캬", "쉑히", "씹새기", "고아새기", "샠기", "애새기", "이새기", "느그새기", "장애새기"}
 	for _, item := range sonofbitch {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	dick := []string{"w같은"}
 	for _, item := range dick {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 	input = strings.ReplaceAll(newtext, "丕", "조")
@@ -602,7 +612,7 @@ func General(input string) bool {
 	dick = []string{"ㅈ같", "ㅈ망", "ㅈ까", "ㅈ경", "ㅈ가튼"}
 	for _, item := range dick {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^가-힣]`).ReplaceAllString(newtext, "")
@@ -615,35 +625,35 @@ func General(input string) bool {
 		"좋같", "좃같", "좃물", "좃밥", "줫", "좋밥", "좋물", "좇"}
 	for _, item := range dick {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	damn := []string{"썅", "씨앙", "씨양", "샤앙", "쌰앙"}
 	for _, item := range damn {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	swear := []string{"tq", "qt"}
 	for _, item := range swear {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	whatthefuck := []string{"뻑유", "뻐킹", "뻐큐", "빡큐", "뿩큐", "뻑큐", "빡유", "뻒큐"}
 	for _, item := range whatthefuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	shutup := []string{"닥쳐", "닭쳐", "닥치라", "아가리해"}
 	for _, item := range shutup {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -651,14 +661,14 @@ func General(input string) bool {
 	sonofagun := []string{"dog새"}
 	for _, item := range sonofagun {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
 	sonofagun = []string{"개ㅐ색"}
 	for _, item := range sonofagun {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = strings.ReplaceAll(newtext, "0개", "")
@@ -710,16 +720,24 @@ func General(input string) bool {
 		"게좆", "계같은뇬", "계뇬", "계뇽", "쉬댕", "쉬뎅", "개생끼"}
 	for _, item := range sonofagun {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Minor(input string) bool {
+// 사소한 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Minor(input string) (bool, string) {
 	newtext := strings.ToLower(input)
 
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
@@ -729,7 +747,7 @@ func Minor(input string) bool {
 	damnit := []string{"ㅁㅊ", "ㅁ친", "ㅁ쳤", "aㅣ친", "me친", "미ㅊ", "DI친"}
 	for _, item := range damnit {
 		if strings.Contains(input, item+"놈") {
-			return true
+			return true, item
 		}
 	}
 
@@ -746,7 +764,7 @@ func Minor(input string) bool {
 	damnit = []string{"미친놈", "미친새끼"}
 	for _, item := range damnit {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -754,7 +772,7 @@ func Minor(input string) bool {
 	picking := []string{"꼽냐", "꼽니", "꼽나"}
 	for _, item := range picking {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -772,23 +790,31 @@ func Minor(input string) bool {
 	picking = []string{"뒤져", "뒈져", "뒈진", "뒈질", "디져라", "디진다", "디질래", "뒤질"}
 	for _, item := range picking {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Sexual(input string) bool {
+// 성적관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Sexual(input string) (bool, string) {
 	newtext := strings.ToLower(ChangeUnicode(input))
 
 	input = strings.ReplaceAll(input, " ", "")
 	pussy := []string{"ⓑⓞⓩⓘ", "bozi", "보ㅈㅣ"}
 	for _, item := range pussy {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = strings.ReplaceAll(newtext, "보지도 못", "")
@@ -853,20 +879,20 @@ func Sexual(input string) bool {
 		"bozi", "개보즤", "개보지", "버지벌렁벌렁", "보짖", "뵤즤", "봊이"}
 	for _, item := range pussy {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	dicks := []string{"ja지"}
 	for _, item := range dicks {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
 	onahole := []string{"ㅈㅈ빨", "자ㅈ", "ㅈ지빨"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = strings.ReplaceAll(newtext, "언제 자지", "")
@@ -913,7 +939,7 @@ func Sexual(input string) bool {
 	dicks = []string{"자지", "자짓", "잦이", "쟈지"}
 	for _, item := range dicks {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -938,7 +964,7 @@ func Sexual(input string) bool {
 		"ㅅㅅ", "s하고e싶다x", "ㅅㅔㅅㄱ", "이=스", "ㅇl=스"}
 	for _, item := range sex {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`\^`).ReplaceAllString(newtext, "ㅅ")
@@ -949,7 +975,7 @@ func Sexual(input string) bool {
 	sex = []string{"ㅅㅔㄱ스", "섹ㅅ", "ㅅ스", "세ㄱㅅ", "ㅅㅔㄱㅅ"}
 	for _, item := range sex {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -992,14 +1018,14 @@ func Sexual(input string) bool {
 		"섹하구", "섹하자", "섹하장", "섹하쟈", "섹한번", "쌕스"}
 	for _, item := range sex {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	dick := []string{"꼬3", "꼬툭튀", "꼬톡튀"}
 	for _, item := range dick {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1008,7 +1034,7 @@ func Sexual(input string) bool {
 		"개부랄", "개부러럴", "개부럴", "개부뢀", "개부알", "개불알", "똘추", "똥구멍", "부라랄"}
 	for _, item := range fireegg {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1016,7 +1042,7 @@ func Sexual(input string) bool {
 	onahole = []string{"오나홍", "오나홀", "ㅇㄴ홀", "텐가", "바이브레이터", "오ㄴ홀", "ㅇ나홀"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1024,7 +1050,7 @@ func Sexual(input string) bool {
 	sex = []string{"씹하다"}
 	for _, item := range sex {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1032,7 +1058,7 @@ func Sexual(input string) bool {
 	onahole = []string{"매춘부", "성노예"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1040,7 +1066,7 @@ func Sexual(input string) bool {
 	onahole = []string{"자궁문신"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1048,7 +1074,7 @@ func Sexual(input string) bool {
 	onahole = []string{"모유물", "로리물", "근친상간", "룸섹스", "원조교재", "속박플레이", "야외플레이"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1066,14 +1092,14 @@ func Sexual(input string) bool {
 		"배위에싸죠", "몸의대화", "섹할", "섹해"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	onahole = []string{"g스팟", "지스팟"}
 	for _, item := range onahole {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1081,21 +1107,21 @@ func Sexual(input string) bool {
 	onahole = []string{"크리토리스", "클리토리스", "페니스", "애널"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
 	onahole = []string{"젖까", "젖가튼", "젖나", "젖만"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
 	onahole = []string{"ja위"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1112,7 +1138,7 @@ func Sexual(input string) bool {
 	onahole = []string{"자위", "고자새끼", "고츄", "꺼추", "꼬추"}
 	for _, item := range onahole {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1121,16 +1147,28 @@ func Sexual(input string) bool {
 	moan := []string{"헤으응", "헤응", "헤윾", "헤윽", "하앙", "하윾", "하윽"}
 	for _, item := range moan {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return strings.Contains(input, "freenude")
+	if strings.Contains(input, "freenude") {
+		return true, "freenude"
+	}
+
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Belittle(input string) bool {
+// 비하발언관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Belittle(input string) (bool, string) {
 	input = strings.ToLower(input)
 	newtext := strings.ReplaceAll(input, " ", "")
 
@@ -1140,7 +1178,7 @@ func Belittle(input string) bool {
 	belittling := []string{"10련"}
 	for _, item := range belittling {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1182,16 +1220,24 @@ func Belittle(input string) bool {
 		"깔보", "난잡년", "빡대가리", "더러운년", "돌아이", "또라이", "장애려", "샹놈", "김치남", "김치녀", "혜지련", "한유남충", "페미나치", "페미년", "꼴페미"}
 	for _, item := range belittling {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Race(input string) bool {
+// 인종차별관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Race(input string) (bool, string) {
 	input = strings.ToLower(input)
 	newtext := strings.ReplaceAll(input, " ", "")
 
@@ -1201,23 +1247,31 @@ func Race(input string) bool {
 		"짱께", "짱게", "쪽바리", "쪽파리", "빨갱이", "쪽바리", "니그로", "코쟁이", "칭총", "칭챙총", "섬숭이", "왜놈", "짱꼴라", "짱깨", "섬짱깨"}
 	for _, item := range nigger {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Parent(input string) bool {
+// 패드립관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Parent(input string) (bool, string) {
 	input = strings.ToLower(input)
 	newtext := strings.ReplaceAll(input, " ", "")
 
 	your := []string{"ㄴ1ㄱ", "ㄴ1ㅁ", "느금ㅁ", "ㄴㄱ마", "ㄴㄱ빠", "ㄴ금빠", "ㅇH미", "ㄴ1에미", "늬애미", "@ㅐ미", "@ㅐ비"}
 	for _, item := range your {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
@@ -1226,7 +1280,7 @@ func Parent(input string) bool {
 	your = []string{"ㄴㄱㅁ", "ㄴ금마", "느금ㅁ", "ㄴㄱ마", "ㄴㄱ빠", "ㄴ금빠", "ㄴ미", "늬금마"}
 	for _, item := range your {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(newtext, "")
@@ -1240,7 +1294,7 @@ func Parent(input string) bool {
 		"느그마", "니엄마", "엄창", "엠창", "니미럴", "누굼마", "느금", "내미랄", "내미럴", "엄마없는", "아빠없는", "노에미"}
 	for _, item := range your {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1253,30 +1307,38 @@ func Parent(input string) bool {
 		"애미죽", "애미디진"}
 	for _, item := range motherfuck {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Politics(input string) bool {
+// 정치관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Politics(input string) (bool, string) {
 	input = strings.ToLower(input)
 	newtext := strings.ReplaceAll(input, " ", "")
 
 	mh := []string{"노시개", "노알라", "뇌사모", "뇌물현", "응디시티"}
 	for _, item := range mh {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
 	ji := []string{"귀걸이아빠", "달창", "대깨문", "문재앙", "문죄앙", "문죄인", "문크예거", "훠훠훠", "문빠"}
 	for _, item := range ji {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1284,21 +1346,21 @@ func Politics(input string) bool {
 		"바쁜벌꿀", "수첩공주", "유신공주", "유체이탈화법", "칠푼이", "쿼터갓"}
 	for _, item := range gh {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
 	jh := []string{"반인반신", "데미갓", "박정희"}
 	for _, item := range jh {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
 	cs := []string{"간철수"}
 	for _, item := range cs {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
@@ -1326,39 +1388,54 @@ func Politics(input string) bool {
 	mb := []string{"가카", "이명박근혜", "다스는누구겁니까"}
 	for _, item := range mb {
 		if strings.Contains(input, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 // 현재 미지원
-func English(input string) bool {
-	return false
+func English(input string) (bool, string) {
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Japanese(input string) bool {
+// 일본어관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Japanese(input string) (bool, string) {
 	newtext := strings.ToLower(input)
 
 	jap := []string{"肉便器", "糞野郎", "バカ野郎", "腐れ外道", "部落民", "中出し", "強姦",
 		"特定アジア", "人非人", "鬼畜", "負け犬", "支那", "トルコ風呂", "淫売", "未開人"}
 	for _, item := range jap {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Chinese(input string) bool {
+// 중국어관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Chinese(input string) (bool, string) {
 	newtext := ChangeUnicode(input)
 
 	chi := []string{"G巴", "Ｇ巴", "G叭", "Ｇ叭", "G芭", "Ｇ芭", "G掰", "Ｇ掰", "g點", "MM屄", "mm美圖", "qvod成人", "sex聊天室", "SM後庭器具", "SM援交", "SM舔穴", "sm調教",
@@ -1442,16 +1519,23 @@ func Chinese(input string) bool {
 		"鷄巴", "囅", "鹽酸氯胺酮", "鹽酸羥亞胺", "豔母淫臀", "豔乳", "豔婦淫女", "豔情小說", "豔舞淫業"}
 	for _, item := range chi {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-func Special(input string) bool {
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func Special(input string) (bool, string) {
 	input = strings.ToLower(input)
 	newtext := strings.ReplaceAll(input, " ", "")
 
@@ -1460,85 +1544,132 @@ func Special(input string) bool {
 
 	for _, item := range emoji {
 		if strings.Contains(newtext, item) {
-			return true
+			return true, item
 		}
 	}
 
-	return false
+	return false, ""
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+// 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	 CheckInfo: struct {
+//		    Detect bool   // 비속어 감지 여부
+//			Swear  string // 감지된 비속어
+//			Type   int    // 비속어의 유형
+//	 }
 func Check(input string) CheckInfo {
-	if General(input) {
+	var detect bool
+	var swear string
+
+	detect, swear = General(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DGeneral,
 		}
 	}
-	if Minor(input) {
+
+	detect, swear = Minor(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DMinor,
 		}
 	}
-	if Sexual(input) {
+
+	detect, swear = Sexual(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DSexual,
 		}
 	}
-	if Belittle(input) {
+
+	detect, swear = Belittle(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DBelittle,
 		}
 	}
-	if Race(input) {
+
+	detect, swear = Race(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DRace,
 		}
 	}
-	if Parent(input) {
+
+	detect, swear = Parent(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DParent,
 		}
 	}
-	if Politics(input) {
+
+	detect, swear = Politics(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DPolitics,
 		}
 	}
-	if English(input) {
+
+	detect, swear = English(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DEnglish,
 		}
 	}
-	if Japanese(input) {
+
+	detect, swear = Japanese(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DJapanese,
 		}
 	}
-	if Chinese(input) {
+
+	detect, swear = Chinese(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DChinese,
 		}
 	}
-	if Special(input) {
+
+	detect, swear = Special(input)
+	if detect {
 		return CheckInfo{
 			Detect: true,
+			Swear:  swear,
 			Type:   DSpecial,
 		}
 	}
 
 	return CheckInfo{
 		Detect: false,
+		Swear:  "",
 		Type:   DNone,
 	}
 }
