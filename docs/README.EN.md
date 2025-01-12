@@ -5,7 +5,7 @@
 </div>
 <div align="center">
   <h3>
-    <a href="https://github.com/fluffy-melli/korcen-go">KR</a>
+    <a href="https://github.com/fluffy-melli/korcen-go">KR</a> /
     <a href="https://github.com/fluffy-melli/korcen-go/blob/main/docs/README.EN.md">EN</a>
   </h3>
 </div>
