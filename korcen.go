@@ -1013,6 +1013,7 @@ func Sexual(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "야스톤", "")
 	input = strings.ReplaceAll(input, "유니섹스", "")
 	input = strings.ReplaceAll(input, "스튜디오", "")
+	input = strings.ReplaceAll(input, "스티커", "")
 	input = regexp.MustCompile(`[^ㄱ-힣]`).ReplaceAllString(input, "")
 	sex = []string{"섹스", "섻", "쉑스", "섿스", "섹그", "야스", "색스", "셱스", "섁스", "세엑스", "썩스", "섹수", "섹파", "섹하자", "쉐스", "쉑스", "쉐엑스", "색수", "세엑수우", "섹하고",
 		"섹하구", "섹하자", "섹하장", "섹하쟈", "섹한번", "쌕스"}

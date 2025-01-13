@@ -1,7 +1,5 @@
 package korcen
 
-import "strings"
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 영어관련 비속어 감지 및 결과 반환 함수
 // 입력:
@@ -72,11 +70,7 @@ func English(input string) (bool, string) {
 		"wank", "wanker", "wanky", "wazoo", "wedgie", "weed", "weenie", "weewee", "weiner", "weirdo", "wench", "wetback", "wh0re", "wh0reface", "whitey", "whiz", "whoar", "whoralicious", "whore",
 		"whorealicious", "whored", "whoreface", "whorehopper", "whorehouse", "whores", "whoring", "wigger", "willies", "willy", "womb", "woody", "wop", "wtf", "x-rated2g1c", "xx", "xxx", "yaoi", "yury",
 	}
-	for _, item := range list {
-		if strings.Contains(newtext, item) {
-			return true, item
-		}
-	}
 
-	return false, ""
+	prof := NewProfanity(list)
+	return prof.Censor(newtext)
 }
