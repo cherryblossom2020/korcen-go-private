@@ -5,7 +5,7 @@
         <rect x="53" width="43" height="20" fill="#a0ee6c"/>
     </g>
     <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
-        <text x="250" y="140" transform="scale(.1)" fill="#fff" textLength="470">version</text>
-        <text x="745" y="140" transform="scale(.1)" fill="#fff" textLength="330">v0.3.0</text>
+        <text x="250" y="140" transform="scale(.1)" fill="#fff" textLength="410">version</text>
+        <text x="745" y="140" transform="scale(.1)" fill="#fff" textLength="320">v0.3.0</text>
     </g>
 </svg>
