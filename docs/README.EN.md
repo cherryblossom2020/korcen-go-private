@@ -2,6 +2,7 @@
   <h1>Korcen.go</h1>
 
   ![Go Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/go_version.svg)
+  ![Module Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/module_version.svg)
 </div>
 <div align="center">
   <h3>
@@ -18,8 +19,10 @@
 ```
 https://github.com/Tanat05/korcen
 ---------------------------------
-!The code below is a Go translation of the code written by "Tanat05"
-!The license for this project also follows Apache-2.0.
+This project is a modified version of the original `korcen` project.
+The original project can be found at `https://github.com/Tanat05/korcen`.
+
+This project also follows the Apache-2.0 license.
 ```
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
