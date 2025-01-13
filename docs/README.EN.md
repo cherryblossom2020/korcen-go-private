@@ -30,6 +30,25 @@ Copyright© All rights reserved.
 
 ---
 
+# ❓ Main Features
+
+```diff
+[Inappropriate Language Detection]
+- General inappropriate language
+- Minor inappropriate language
+- Sexual language or expressions
+- Derogatory expressions
+- Racially discriminatory inappropriate expressions
+- Language that belittles or attacks parents
+- Politically inappropriate language or expressions
+- Inappropriate expressions in English
+- Inappropriate expressions in Japan
+- Inappropriate expressions in China
+- Other special inappropriate expressions
+```
+
+---
+
 # ⬇️ Installation
 
 >mod
