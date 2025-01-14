@@ -487,7 +487,7 @@ func General(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -532,7 +532,7 @@ func Minor(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -723,7 +723,7 @@ func Sexual(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -780,7 +780,7 @@ func Belittle(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -805,7 +805,7 @@ func Race(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -838,7 +838,7 @@ func Parent(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -882,7 +882,7 @@ func Politics(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -905,7 +905,7 @@ func Japanese(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -929,7 +929,7 @@ func Chinese(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
@@ -952,7 +952,7 @@ func Special(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 4 {
+		if Levenshtein(input, item) <= 3 {
 			return true, item
 		}
 	}
