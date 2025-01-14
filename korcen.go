@@ -487,6 +487,9 @@ func General(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
+		if Levenshtein(input, item) <= 4 {
+			return true, item
+		}
 	}
 
 	return false, ""
@@ -527,6 +530,9 @@ func Minor(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "뒤져볼", "")
 	for _, item := range cache.Minor {
 		if strings.Contains(input, item) {
+			return true, item
+		}
+		if Levenshtein(input, item) <= 4 {
 			return true, item
 		}
 	}
@@ -717,6 +723,9 @@ func Sexual(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
+		if Levenshtein(input, item) <= 4 {
+			return true, item
+		}
 	}
 
 	return false, ""
@@ -771,6 +780,9 @@ func Belittle(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
+		if Levenshtein(input, item) <= 4 {
+			return true, item
+		}
 	}
 
 	return false, ""
@@ -791,6 +803,9 @@ func Race(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "흑형님", "")
 	for _, item := range cache.Race {
 		if strings.Contains(input, item) {
+			return true, item
+		}
+		if Levenshtein(input, item) <= 4 {
 			return true, item
 		}
 	}
@@ -821,6 +836,9 @@ func Parent(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "도", "")
 	for _, item := range cache.Parent {
 		if strings.Contains(input, item) {
+			return true, item
+		}
+		if Levenshtein(input, item) <= 4 {
 			return true, item
 		}
 	}
@@ -864,6 +882,9 @@ func Politics(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
+		if Levenshtein(input, item) <= 4 {
+			return true, item
+		}
 	}
 	return false, ""
 }
@@ -882,6 +903,9 @@ func Japanese(input string) (bool, string) {
 	input = ChangeUnicode(input)
 	for _, item := range cache.Japanese {
 		if strings.Contains(input, item) {
+			return true, item
+		}
+		if Levenshtein(input, item) <= 4 {
 			return true, item
 		}
 	}
@@ -905,6 +929,9 @@ func Chinese(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
+		if Levenshtein(input, item) <= 4 {
+			return true, item
+		}
 	}
 
 	return false, ""
@@ -923,6 +950,9 @@ func Special(input string) (bool, string) {
 	input = ChangeUnicode(input)
 	for _, item := range cache.Emoji {
 		if strings.Contains(input, item) {
+			return true, item
+		}
+		if Levenshtein(input, item) <= 4 {
 			return true, item
 		}
 	}
