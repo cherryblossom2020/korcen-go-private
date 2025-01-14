@@ -26,6 +26,10 @@ This project also follows the Apache-2.0 license.
 ```
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
+The korcen-go project follows the Apache-2.0 license. If you use the code, please comply with the terms of the license.
+
+- License and copyright notices must be displayed (in areas accessible to the general public).
+
 Copyright© All rights reserved.
 
 ---
