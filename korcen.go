@@ -261,7 +261,7 @@ func General(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "다시 불안", "")
 	input = strings.ReplaceAll(input, "하시바라 이노스케", "")
 	input = strings.ReplaceAll(input, "할 시", "")
-	input = ko_re.ReplaceAllString(input, "")
+	//input = ko_re.ReplaceAllString(input, "")
 	fuck = []string{"시ㅂ", "시ㅏㄹ", "씨ㅂ", "씨ㅏㄹ", "ㅣ발", "ㅆ발", "ㅅ발", "ㅅㅂ", "ㅆㅂ", "ㅆ바", "ㅅ바",
 		"시ㅂㅏ", "ㅅㅂㅏ", "시ㅏㄹ", "씨ㅏㄹ", "ㅅ불", "ㅆ불", "ㅅ쁠", "ㅆ뿔", "ㅆㅣ발", "ㅅㅟ발", "ㅅㅣㅂㅏ",
 		"ㅣ바알", "ㅅ벌", "^^ㅣ벌", "ㅆ삐라", "씨ㅃ", "^^/발"}
@@ -351,12 +351,12 @@ func General(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "이", "")
 	input = strings.ReplaceAll(input, "일", "")
 	input = strings.ReplaceAll(input, "의", "")
-	input = ko_re.ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "즉시발급", "")
 	input = strings.ReplaceAll(input, "련", "놈")
 	input = strings.ReplaceAll(input, "뇬", "놈")
 	input = strings.ReplaceAll(input, "놈", "놈")
 	input = strings.ReplaceAll(input, "넘", "놈")
+	input = ko_re.ReplaceAllString(input, "")
 	fuck = []string{"시발", "씨발", "시봘", "씨봘", "씨바", "시바", "샤발", "씌발", "씹발", "시벌", "시팔", "싯팔",
 		"씨빨", "씨랼", "씨파", "띠발", "띡발", "띸발", "싸발", "십발", "슈발", "야발", "씨불", "씨랄",
 		"쉬발", "쓰발", "쓔발", "쌰발", "쉬발", "쒸발", "씨팔", "씨밝", "씨밯", "쑤발", "치발", "샤발",
@@ -583,7 +583,7 @@ func General(input string) (bool, string) {
 	}
 	input = strings.ReplaceAll(newtext, "丕", "조")
 	input = strings.ReplaceAll(input, "刀卜", "까")
-	input = regexp.MustCompile(`조 \d+까지`).ReplaceAllString(input, "")
+	//input = regexp.MustCompile(`조 \d+까지`).ReplaceAllString(input, "")
 	input = ko_re.ReplaceAllString(input, "")
 	input = strings.ReplaceAll(input, "줫습니다", "")
 	input = strings.ReplaceAll(input, "줫음", "")
@@ -962,7 +962,7 @@ func Sexual(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "except", "")
 	input = strings.ReplaceAll(input, "sexual", "")
 	input = strings.ReplaceAll(input, "sexy", "")
-	input = regexp.MustCompile("[^a-z]").ReplaceAllString(input, "")
+	//input = regexp.MustCompile("[^a-z]").ReplaceAllString(input, "")
 	sex := []string{"sex", "s스", "x스", "se스", "se스", "s스",
 		"ㅅㅅ", "s하고e싶다x", "ㅅㅔㅅㄱ", "이=스", "ㅇl=스"}
 	for _, item := range sex {
