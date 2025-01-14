@@ -1,6 +1,8 @@
 package korcen
 
-import "strings"
+import (
+	"strings"
+)
 
 type Profanity struct {
 	CensorWords     map[string]bool
@@ -30,7 +32,7 @@ func NewProfanity(words []string) *Profanity {
 		CensorWords:     censorWords,
 		CharMapping:     charMapping,
 		AllowedChars:    allowedChars,
-		MaxCombinations: 1,
+		MaxCombinations: 3,
 	}
 }
 
@@ -45,6 +47,41 @@ func (p *Profanity) Censor(text string) (bool, string) {
 }
 
 func (p *Profanity) ContainsProfanity(word string) bool {
-	_, exists := p.CensorWords[strings.ToLower(word)]
-	return exists
+	word = p.cleanWord(word)
+	for _, processedWord := range p.generateCombinations(word) {
+		if p.CensorWords[strings.ToLower(processedWord)] {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Profanity) cleanWord(word string) string {
+	var cleanedWord strings.Builder
+	for _, r := range word {
+		if _, exists := p.AllowedChars[r]; exists {
+			cleanedWord.WriteRune(r)
+		}
+	}
+	return cleanedWord.String()
+}
+
+func (p *Profanity) generateCombinations(word string) []string {
+	var combinations []string
+	combinations = append(combinations, word)
+	for i := 0; i < p.MaxCombinations; i++ {
+		var newCombinations []string
+		for _, comb := range combinations {
+			for i, r := range comb {
+				if replacements, exists := p.CharMapping[r]; exists {
+					for _, repl := range replacements {
+						newComb := comb[:i] + string(repl) + comb[i+1:]
+						newCombinations = append(newCombinations, newComb)
+					}
+				}
+			}
+		}
+		combinations = append(combinations, newCombinations...)
+	}
+	return combinations
 }
