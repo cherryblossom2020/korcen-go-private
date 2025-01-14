@@ -2,6 +2,7 @@ package korcen
 
 import (
 	"strings"
+	"unicode"
 
 	"github.com/fluffy-melli/korcen-go/cache"
 )
@@ -105,7 +106,31 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "Ｃ", "C")
 	unicode = strings.ReplaceAll(unicode, "Ｕ", "U")
 	unicode = strings.ToLower(unicode)
+	unicode = Duplicate(unicode)
+	unicode = SpecialChar(unicode)
 	return unicode
+}
+
+func Duplicate(input string) string {
+	var result strings.Builder
+	var prevRune rune
+	for i, currentRune := range input {
+		if i == 0 || currentRune != prevRune {
+			result.WriteRune(currentRune)
+		}
+		prevRune = currentRune
+	}
+	return result.String()
+}
+
+func SpecialChar(input string) string {
+	var result []rune
+	for _, r := range input {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			result = append(result, r)
+		}
+	}
+	return string(result)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -487,9 +512,9 @@ func General(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -532,9 +557,9 @@ func Minor(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -723,9 +748,9 @@ func Sexual(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -780,9 +805,9 @@ func Belittle(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -805,9 +830,9 @@ func Race(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -838,9 +863,9 @@ func Parent(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -882,9 +907,9 @@ func Politics(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 	return false, ""
 }
@@ -905,9 +930,9 @@ func Japanese(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -929,9 +954,9 @@ func Chinese(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
@@ -952,9 +977,9 @@ func Special(input string) (bool, string) {
 		if strings.Contains(input, item) {
 			return true, item
 		}
-		if Levenshtein(input, item) <= 3 {
-			return true, item
-		}
+		//if Levenshtein(input, item) <= 3 {
+		//	return true, item
+		//}
 	}
 
 	return false, ""
