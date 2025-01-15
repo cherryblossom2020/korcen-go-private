@@ -32,15 +32,12 @@ https://github.com/gyarang/gohangul
 이 프로젝트는 원본 `gohangul` 을 사용해서 배포한 것입니다.
 원본 프로젝트는 `https://github.com/gyarang/gohangul`에서 확인할 수 있습니다.
 
-해당 프로젝트의 MIT License 를 따르고 있습니다
+해당 프로젝트의 라이센스인 MIT License 또한 따르고 있습니다
 ```
 
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
-`korcen-go`는 원본 프로젝트의 `Apache-2.0` & `MIT License` 라이선스를 모두 따르고 있습니다.
-코드를 사용할 경우 라이선스 내용을 준수해주세요. 
-
-- 라이선스 고지 및 저작권 고지 필수(일반인이 접근 가능한 부분에 표시)
+`korcen-go`는 `Apache-2.0` & `MIT License` 라이선스를 모두 따르고 있습니다. 코드를 사용할 경우 라이선스 내용을 준수해주세요. 
 
 Copyright© All rights reserved.
 
@@ -84,6 +81,14 @@ import (
 )
 
 func main() {
-	fmt.Println(korcen.Check(""))
+	// Discord Message Event Logic
+	ck := korcen.Check("MESSAGE")
+	if ck.Detect {
+		dtif := ck.Swear[0]
+		message := ck.NewText[:dtif.Start] + "\x1b[1m\x1b[41m\"" + ck.NewText[dtif.Start:dtif.End] + "\"\x1b[0m" + ck.NewText[dtif.End:]
+		discord_ansi := "```ansi\n" + message + "\n```"
+		fmt.Println(discord_ansi)
+	}
+	// Discord Send Logic
 }
 ```
