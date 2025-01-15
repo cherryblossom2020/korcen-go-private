@@ -37,6 +37,7 @@ const (
 )
 
 func ChangeUnicode(unicode string) string {
+	unicode = strings.ToLower(unicode)
 	unicode = strings.ReplaceAll(unicode, "ㅿ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
@@ -119,16 +120,29 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "Ｋ", "K")
 	unicode = strings.ReplaceAll(unicode, "Ｃ", "C")
 	unicode = strings.ReplaceAll(unicode, "Ｕ", "U")
-	unicode = strings.ReplaceAll(unicode, "Lし ", "니")
-	unicode = strings.ReplaceAll(unicode, "ㄴi ", "니")
-	unicode = strings.ReplaceAll(unicode, "のH ", "애")
-	unicode = strings.ReplaceAll(unicode, "ㅇH ", "애")
-	unicode = strings.ReplaceAll(unicode, "ㅁL ", "미")
-	unicode = strings.ReplaceAll(unicode, "口ㅣ ", "미")
-	unicode = strings.ToLower(unicode)
-	unicode = Clean(unicode)
+	unicode = strings.ReplaceAll(unicode, "し ", "ㅣ")
+	unicode = strings.ReplaceAll(unicode, "i ", "ㅣ")
+	unicode = strings.ReplaceAll(unicode, "l ", "ㅣ")
+	unicode = strings.ReplaceAll(unicode, "の ", "ㅇ")
+	unicode = strings.ReplaceAll(unicode, "ㅁ ", "ㅁ")
+	unicode = strings.ReplaceAll(unicode, "口 ", "ㅁ")
+	unicode = strings.ReplaceAll(unicode, "H", "ㅐ")
+	unicode = strings.ReplaceAll(unicode, "H", "ㅐ")
+	unicode = strings.ReplaceAll(unicode, "ス", "ㅈ")
+	unicode = strings.ReplaceAll(unicode, "へ", "ㅅ")
+	unicode = strings.ReplaceAll(unicode, "旦", "므")
 	unicode = CombineHangul(unicode)
+	unicode = Clean(unicode)
 	return unicode
+}
+
+func After(input string) string {
+	input = strings.ReplaceAll(input, "자아", "자")
+	input = strings.ReplaceAll(input, "가아", "가")
+	input = strings.ReplaceAll(input, "나아", "나")
+	input = strings.ReplaceAll(input, "세엑", "섹")
+	input = strings.ReplaceAll(input, "세에", "섹")
+	return input
 }
 
 func Clean(input string) string {
@@ -581,6 +595,7 @@ func General(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "생긴게", "")
 	input = strings.ReplaceAll(input, "날개같다", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.General {
 		if strings.Contains(input, item) {
 			return true, item
@@ -624,6 +639,7 @@ func Minor(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "뒤져봄", "")
 	input = strings.ReplaceAll(input, "뒤져볼", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Minor {
 		if strings.Contains(input, item) {
 			return true, item
@@ -813,6 +829,7 @@ func Sexual(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "작업자", "")
 	input = strings.ReplaceAll(input, "자기위로", "자위")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Sexual {
 		if strings.Contains(input, item) {
 			return true, item
@@ -868,6 +885,7 @@ func Belittle(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "더운지역", "")
 	input = strings.ReplaceAll(input, "나따까리", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Belittle {
 		if strings.Contains(input, item) {
 			return true, item
@@ -891,6 +909,7 @@ func Race(input string) (bool, string) {
 	input = ChangeUnicode(input)
 	input = strings.ReplaceAll(input, "흑형님", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Race {
 		if strings.Contains(input, item) {
 			return true, item
@@ -922,6 +941,7 @@ func Parent(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "ㅁㅣ", "미")
 	input = strings.ReplaceAll(input, "도", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Parent {
 		if strings.Contains(input, item) {
 			return true, item
@@ -964,6 +984,7 @@ func Politics(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "카정", "")
 	input = strings.ReplaceAll(input, "카드", "")
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Politics {
 		if strings.Contains(input, item) {
 			return true, item
@@ -1000,6 +1021,7 @@ func English(input string) (bool, string) {
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Japanese(input string) (bool, string) {
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Japanese {
 		if strings.Contains(input, item) {
 			return true, item
@@ -1021,6 +1043,7 @@ func Japanese(input string) (bool, string) {
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Chinese(input string) (bool, string) {
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Chinese {
 		if strings.Contains(input, item) {
 			return true, item
@@ -1041,6 +1064,7 @@ func Chinese(input string) (bool, string) {
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Special(input string) (bool, string) {
 	input = DEL_J(input)
+	input = After(input)
 	for _, item := range cache.Emoji {
 		if strings.Contains(input, item) {
 			return true, item
