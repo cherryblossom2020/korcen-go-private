@@ -5,6 +5,7 @@ import (
 	"unicode"
 
 	"github.com/fluffy-melli/korcen-go/cache"
+	"github.com/gyarang/gohangul"
 )
 
 // Copyright© All rights reserved.
@@ -15,9 +16,16 @@ import (
 //   |_|\__,_|_| |_|\__,_|\__|
 
 type CheckInfo struct {
-	Detect bool   // 비속어 감지 여부
-	Swear  string // 감지된 비속어
-	Type   int    // 비속어의 유형
+	Detect  bool      // 비속어 감지 여부
+	NewText string    // 입력된 메시지
+	Swear   []IndexOF // 감지된 비속어
+}
+
+type IndexOF struct {
+	Swear string // 감지된 비속어
+	Type  int    // 감지된 비속어의 유형
+	Start int    // 시작위치
+	End   int    // 종료위치
 }
 
 // 비속어의 유형
@@ -140,9 +148,9 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "-", "ㅡ")
 	unicode = strings.ReplaceAll(unicode, "/", "ㅣ")
 	unicode = EtoK(unicode)
-	unicode = CombineHangul(unicode)
 	unicode = Clean(unicode)
-	//fmt.Println(unicode) 디버깅용
+	dism := gohangul.Disassemble(unicode)
+	unicode = gohangul.Assemble(dism)
 	return unicode
 }
 
@@ -191,58 +199,6 @@ func DEL_J(input string) string {
 	return input
 }
 
-func CombineHangul(jamo string) string {
-	var result []rune
-	var currentChoseong rune
-	var currentJungseong rune
-	var currentJongseong rune
-	choseongUnicode := map[rune]int{
-		'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
-		'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16,
-		'ㅍ': 17, 'ㅎ': 18,
-	}
-	jungseongUnicode := map[rune]int{
-		'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
-		'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16,
-		'ㅠ': 17, 'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20,
-	}
-	jongseongUnicode := map[rune]int{
-		0: 0, 'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8,
-		'ㄺ': 9, 'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16,
-		'ㅂ': 17, 'ㅃ': 18, 'ㅄ': 19, 'ㅅ': 20, 'ㅆ': 21, 'ㅇ': 22, 'ㅈ': 23, 'ㅉ': 24,
-		'ㅊ': 25, 'ㅋ': 26, 'ㅌ': 27, 'ㅍ': 28, 'ㅎ': 29,
-	}
-	for _, char := range jamo {
-		if _, ok := choseongUnicode[char]; ok {
-			if currentJungseong != 0 {
-				hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
-				result = append(result, rune(hangul))
-				currentChoseong = 0
-				currentJungseong = 0
-				currentJongseong = 0
-			}
-			currentChoseong = char
-		} else if _, ok := jungseongUnicode[char]; ok {
-			if currentJungseong != 0 {
-				hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
-				result = append(result, rune(hangul))
-				currentJongseong = 0
-			}
-			currentJungseong = char
-		} else if _, ok := jongseongUnicode[char]; ok {
-			currentJongseong = char
-		} else {
-			result = append(result, char)
-		}
-	}
-	if currentJungseong != 0 {
-		hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
-		result = append(result, rune(hangul))
-	}
-
-	return string(result)
-}
-
 func EtoK(input string) string {
 	input = strings.ReplaceAll(input, "a", "ㅁ")
 	input = strings.ReplaceAll(input, "b", "ㅠ")
@@ -283,8 +239,7 @@ func EtoK(input string) string {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func General(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func General(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "丨발", "시발")
 	input = strings.ReplaceAll(input, "丨벌", "시발")
 	input = strings.ReplaceAll(input, "丨바", "시발")
@@ -636,13 +591,23 @@ func General(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "날개같다", "")
 	input = DEL_J(input)
 	input = After(input)
+	indexs := make([]IndexOF, 0)
 	for _, item := range cache.General {
-		if strings.Contains(input, item) {
-			return true, item
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DGeneral,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -655,8 +620,7 @@ func General(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Minor(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Minor(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "년", "놈")
 	input = strings.ReplaceAll(input, "련", "놈")
 	input = strings.ReplaceAll(input, "거미", "")
@@ -680,13 +644,23 @@ func Minor(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "뒤져볼", "")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Minor {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DMinor,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -699,8 +673,7 @@ func Minor(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Sexual(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Sexual(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "보지도 못", "")
 	input = strings.ReplaceAll(input, "보지도 않", "")
 	input = strings.ReplaceAll(input, "인가 보지", "")
@@ -870,13 +843,23 @@ func Sexual(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "자기위로", "자위")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Sexual {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DSexual,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -889,8 +872,7 @@ func Sexual(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Belittle(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Belittle(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "뇬", "련")
 	input = strings.ReplaceAll(input, "놈", "련")
 	input = strings.ReplaceAll(input, "넘", "련")
@@ -926,13 +908,23 @@ func Belittle(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "나따까리", "")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Belittle {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DBelittle,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -945,18 +937,27 @@ func Belittle(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Race(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Race(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "흑형님", "")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Race {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DRace,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -969,8 +970,7 @@ func Race(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Parent(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Parent(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "ㄴㄴ", "")
 	input = strings.ReplaceAll(input, "미국", "")
 	input = strings.ReplaceAll(input, "엄창못", "")
@@ -982,13 +982,23 @@ func Parent(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "도", "")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Parent {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DParent,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1001,8 +1011,7 @@ func Parent(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Politics(input string) (bool, string) {
-	input = ChangeUnicode(input)
+func Politics(input string, continues bool) (bool, []IndexOF) {
 	input = strings.ReplaceAll(input, "카카오톡", "")
 	input = strings.ReplaceAll(input, "카톡", "")
 	input = strings.ReplaceAll(input, "카페", "")
@@ -1025,12 +1034,23 @@ func Politics(input string) (bool, string) {
 	input = strings.ReplaceAll(input, "카드", "")
 	input = DEL_J(input)
 	input = After(input)
-	for _, item := range cache.Politics {
-		if strings.Contains(input, item) {
-			return true, item
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DPolitics,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
-	return false, ""
+
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1043,10 +1063,22 @@ func Politics(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func English(input string) (bool, string) {
+func English(input string, continues bool) (bool, []IndexOF) {
 	newtext := ChangeUnicode(input)
 	prof := NewProfanity(cache.English)
-	return prof.Censor(newtext)
+	df, pr := prof.Censor(newtext)
+	if !df {
+		return false, make([]IndexOF, 0)
+	}
+	in := strings.Index(newtext, pr)
+	return true, []IndexOF{
+		{
+			Swear: pr,
+			Type:  DEnglish,
+			Start: in,
+			End:   in + len(pr),
+		},
+	}
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1059,14 +1091,24 @@ func English(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Japanese(input string) (bool, string) {
-	for _, item := range cache.Japanese {
-		if strings.Contains(input, item) {
-			return true, item
+func Japanese(input string, continues bool) (bool, []IndexOF) {
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DJapanese,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1079,14 +1121,24 @@ func Japanese(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Chinese(input string) (bool, string) {
-	for _, item := range cache.Chinese {
-		if strings.Contains(input, item) {
-			return true, item
+func Chinese(input string, continues bool) (bool, []IndexOF) {
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DChinese,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1098,14 +1150,24 @@ func Chinese(input string) (bool, string) {
 //
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func Special(input string) (bool, string) {
-	for _, item := range cache.Emoji {
-		if strings.Contains(input, item) {
-			return true, item
+func Special(input string, continues bool) (bool, []IndexOF) {
+	indexs := make([]IndexOF, 0)
+	for _, item := range cache.General {
+		in := strings.Index(input, item)
+		if in != -1 {
+			indexs = append(indexs, IndexOF{
+				Swear: item,
+				Type:  DSpecial,
+				Start: in,
+				End:   in + len(item),
+			})
+			if !continues {
+				return true, indexs
+			}
 		}
 	}
 
-	return false, ""
+	return false, indexs
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1123,110 +1185,166 @@ func Special(input string) (bool, string) {
 //	 }
 func Check(input string) CheckInfo {
 	var detect bool
-	var swear string
-
-	detect, swear = General(input)
+	var swear []IndexOF
+	input = ChangeUnicode(input)
+	detect, swear = General(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DGeneral,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Minor(input)
+	detect, swear = Minor(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DMinor,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Sexual(input)
+	detect, swear = Sexual(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DSexual,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Belittle(input)
+	detect, swear = Belittle(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DBelittle,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Race(input)
+	detect, swear = Race(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DRace,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Parent(input)
+	detect, swear = Parent(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DParent,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Politics(input)
+	detect, swear = Politics(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DPolitics,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = English(input)
+	detect, swear = English(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DEnglish,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Japanese(input)
+	detect, swear = Japanese(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DJapanese,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Chinese(input)
+	detect, swear = Chinese(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DChinese,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
-	detect, swear = Special(input)
+	detect, swear = Special(input, false)
 	if detect {
 		return CheckInfo{
-			Detect: true,
-			Swear:  swear,
-			Type:   DSpecial,
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
 		}
 	}
 
 	return CheckInfo{
 		Detect: false,
-		Swear:  "",
-		Type:   DNone,
+		Swear:  make([]IndexOF, 0),
+	}
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	 CheckInfo: struct {
+//		    Detect bool   // 비속어 감지 여부
+//			Swear  string // 감지된 비속어
+//			Type   int    // 비속어의 유형
+//	 }
+func AllCheck(input string) CheckInfo {
+	var swear []IndexOF
+	var respond []IndexOF
+	input = ChangeUnicode(input)
+	_, swear = General(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Minor(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Sexual(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Belittle(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Race(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Parent(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Politics(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = English(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Japanese(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Chinese(input, true)
+	respond = append(respond, swear...)
+
+	_, swear = Special(input, true)
+	respond = append(respond, swear...)
+
+	return CheckInfo{
+		Detect:  len(respond) != 0,
+		NewText: input,
+		Swear:   respond,
 	}
 }
