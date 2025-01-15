@@ -110,17 +110,17 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "_", "ㅡ")
 	unicode = strings.ReplaceAll(unicode, "-", "ㅡ")
 	unicode = strings.ReplaceAll(unicode, "/", "ㅣ")
-	unicode = EtoK(unicode)
-	unicode = Clean(unicode)
-	unicode = RVNM(unicode)
+	unicode = EnglishToKo(unicode)
+	unicode = RemoveDuplicate(unicode)
+	unicode = RemoveNumber(unicode)
 	dism := gohangul.Disassemble(unicode)
 	unicode = gohangul.Assemble(dism)
-	unicode = RpGeneral(unicode)
-	unicode = RpMinor(unicode)
-	unicode = RpSexual(unicode)
-	unicode = RpBelittle(unicode)
-	unicode = RpPolitics(unicode)
-	unicode = DEL_J(unicode)
+	unicode = PreGeneral(unicode)
+	unicode = PreMinor(unicode)
+	unicode = PreSexual(unicode)
+	unicode = PreBelittle(unicode)
+	unicode = PrePolitics(unicode)
+	unicode = RemoveJ(unicode)
 	unicode = After(unicode)
 	return unicode
 }
@@ -134,7 +134,7 @@ func After(input string) string {
 	return input
 }
 
-func Clean(input string) string {
+func RemoveDuplicate(input string) string {
 	var result strings.Builder
 	var prevRune rune
 	for i, currentRune := range input {
@@ -146,12 +146,11 @@ func Clean(input string) string {
 	return result.String()
 }
 
-func DEL_J(input string) string {
+func RemoveJ(input string) string {
 	input = strings.ReplaceAll(input, "ㅏ", "")
 	input = strings.ReplaceAll(input, "ㅑ", "")
 	input = strings.ReplaceAll(input, "ㅓ", "")
 	input = strings.ReplaceAll(input, "ㅕ", "")
-	input = strings.ReplaceAll(input, "ㅗ", "")
 	input = strings.ReplaceAll(input, "ㅛ", "")
 	input = strings.ReplaceAll(input, "ㅜ", "")
 	input = strings.ReplaceAll(input, "ㅠ", "")
@@ -170,7 +169,7 @@ func DEL_J(input string) string {
 	return input
 }
 
-func EtoK(input string) string {
+func EnglishToKo(input string) string {
 	input = strings.ReplaceAll(input, "a", "ㅁ")
 	input = strings.ReplaceAll(input, "b", "ㅠ")
 	input = strings.ReplaceAll(input, "c", "ㅊ")
@@ -200,7 +199,7 @@ func EtoK(input string) string {
 	return input
 }
 
-func RVNM(input string) string {
+func RemoveNumber(input string) string {
 	input = strings.ReplaceAll(input, "0", "")
 	input = strings.ReplaceAll(input, "1", "")
 	input = strings.ReplaceAll(input, "2", "")
@@ -214,7 +213,7 @@ func RVNM(input string) string {
 	return input
 }
 
-func RpGeneral(input string) string {
+func PreGeneral(input string) string {
 	input = strings.ReplaceAll(input, "丨발", "시발")
 	input = strings.ReplaceAll(input, "丨벌", "시발")
 	input = strings.ReplaceAll(input, "丨바", "시발")
@@ -566,7 +565,7 @@ func RpGeneral(input string) string {
 	return input
 }
 
-func RpMinor(input string) string {
+func PreMinor(input string) string {
 	input = strings.ReplaceAll(input, "년", "놈")
 	input = strings.ReplaceAll(input, "련", "놈")
 	input = strings.ReplaceAll(input, "거미", "")
@@ -591,7 +590,7 @@ func RpMinor(input string) string {
 	return input
 }
 
-func RpSexual(input string) string {
+func PreSexual(input string) string {
 	input = strings.ReplaceAll(input, "보지도 못", "")
 	input = strings.ReplaceAll(input, "보지도 않", "")
 	input = strings.ReplaceAll(input, "인가 보지", "")
@@ -761,7 +760,7 @@ func RpSexual(input string) string {
 	return input
 }
 
-func RpBelittle(input string) string {
+func PreBelittle(input string) string {
 	input = strings.ReplaceAll(input, "뇬", "련")
 	input = strings.ReplaceAll(input, "놈", "련")
 	input = strings.ReplaceAll(input, "넘", "련")
@@ -798,7 +797,7 @@ func RpBelittle(input string) string {
 	return input
 }
 
-func RpParent(input string) string {
+func PreParent(input string) string {
 	input = strings.ReplaceAll(input, "ㄴㄴ", "")
 	input = strings.ReplaceAll(input, "미국", "")
 	input = strings.ReplaceAll(input, "엄창못", "")
@@ -806,7 +805,7 @@ func RpParent(input string) string {
 	return input
 }
 
-func RpPolitics(input string) string {
+func PrePolitics(input string) string {
 	input = strings.ReplaceAll(input, "카카오톡", "")
 	input = strings.ReplaceAll(input, "카톡", "")
 	input = strings.ReplaceAll(input, "카페", "")
