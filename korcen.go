@@ -245,6 +245,15 @@ func Special(input string, continues bool) (bool, []IndexOF) {
 func Check(input string) CheckInfo {
 	var detect bool
 	var swear []IndexOF
+	detect, swear = English(input, false)
+	if detect {
+		return CheckInfo{
+			Detect:  true,
+			NewText: input,
+			Swear:   swear,
+		}
+	}
+
 	input = ChangeUnicode(input)
 	detect, swear = General(input, false)
 	if detect {
@@ -309,15 +318,6 @@ func Check(input string) CheckInfo {
 		}
 	}
 
-	detect, swear = English(input, false)
-	if detect {
-		return CheckInfo{
-			Detect:  true,
-			NewText: input,
-			Swear:   swear,
-		}
-	}
-
 	detect, swear = Japanese(input, false)
 	if detect {
 		return CheckInfo{
@@ -349,62 +349,5 @@ func Check(input string) CheckInfo {
 		Detect:  false,
 		NewText: input,
 		Swear:   make([]IndexOF, 0),
-	}
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 비속어 감지 및 결과 반환 함수
-// 입력:
-//
-//	input: 비속어가 포함될 수 있는 문자열.
-//
-// 출력:
-//
-//	 CheckInfo: struct {
-//		    Detect bool   // 비속어 감지 여부
-//			Swear  string // 감지된 비속어
-//			Type   int    // 비속어의 유형
-//	 }
-func AllCheck(input string) CheckInfo {
-	var swear []IndexOF
-	var respond []IndexOF
-	input = ChangeUnicode(input)
-	_, swear = General(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Minor(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Sexual(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Belittle(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Race(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Parent(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Politics(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = English(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Japanese(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Chinese(input, true)
-	respond = append(respond, swear...)
-
-	_, swear = Special(input, true)
-	respond = append(respond, swear...)
-
-	return CheckInfo{
-		Detect:  len(respond) != 0,
-		NewText: input,
-		Swear:   respond,
 	}
 }
