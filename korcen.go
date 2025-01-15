@@ -41,6 +41,7 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "ㅿ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
+	unicode = strings.ReplaceAll(unicode, "ハ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "人", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "∧", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "／＼", "ㅅ")
@@ -52,6 +53,7 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "卜", "ㅏ")
 	unicode = strings.ReplaceAll(unicode, "l", "ㅣ")
 	unicode = strings.ReplaceAll(unicode, "r", "ㅏ")
+	unicode = strings.ReplaceAll(unicode, "ト", "ㅏ")
 	unicode = strings.ReplaceAll(unicode, "ᐲ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "ᗨ", "ㅂ")
 	unicode = strings.ReplaceAll(unicode, "𝗌", "s")
@@ -126,13 +128,21 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "の ", "ㅇ")
 	unicode = strings.ReplaceAll(unicode, "ㅁ ", "ㅁ")
 	unicode = strings.ReplaceAll(unicode, "口 ", "ㅁ")
+	unicode = strings.ReplaceAll(unicode, "曰 ", "ㅁ")
 	unicode = strings.ReplaceAll(unicode, "H", "ㅐ")
 	unicode = strings.ReplaceAll(unicode, "H", "ㅐ")
 	unicode = strings.ReplaceAll(unicode, "ス", "ㅈ")
 	unicode = strings.ReplaceAll(unicode, "へ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "旦", "므")
+	unicode = strings.ReplaceAll(unicode, "畀", "뷰")
+	unicode = strings.ReplaceAll(unicode, "%", "응")
+	unicode = strings.ReplaceAll(unicode, "_", "ㅡ")
+	unicode = strings.ReplaceAll(unicode, "-", "ㅡ")
+	unicode = strings.ReplaceAll(unicode, "/", "ㅣ")
+	unicode = EtoK(unicode)
 	unicode = CombineHangul(unicode)
 	unicode = Clean(unicode)
+	//fmt.Println(unicode) 디버깅용
 	return unicode
 }
 
@@ -231,6 +241,36 @@ func CombineHangul(jamo string) string {
 	}
 
 	return string(result)
+}
+
+func EtoK(input string) string {
+	input = strings.ReplaceAll(input, "a", "ㅁ")
+	input = strings.ReplaceAll(input, "b", "ㅠ")
+	input = strings.ReplaceAll(input, "c", "ㅊ")
+	input = strings.ReplaceAll(input, "d", "ㅇ")
+	input = strings.ReplaceAll(input, "e", "ㄷ")
+	input = strings.ReplaceAll(input, "f", "ㄹ")
+	input = strings.ReplaceAll(input, "g", "ㅎ")
+	input = strings.ReplaceAll(input, "h", "ㅗ")
+	input = strings.ReplaceAll(input, "i", "ㅑ")
+	input = strings.ReplaceAll(input, "j", "ㅓ")
+	input = strings.ReplaceAll(input, "k", "ㅏ")
+	input = strings.ReplaceAll(input, "l", "ㅣ")
+	input = strings.ReplaceAll(input, "m", "ㅡ")
+	input = strings.ReplaceAll(input, "n", "ㅜ")
+	input = strings.ReplaceAll(input, "o", "ㅐ")
+	input = strings.ReplaceAll(input, "p", "ㅔ")
+	input = strings.ReplaceAll(input, "q", "ㅂ")
+	input = strings.ReplaceAll(input, "r", "ㄱ")
+	input = strings.ReplaceAll(input, "s", "ㄴ")
+	input = strings.ReplaceAll(input, "t", "ㅅ")
+	input = strings.ReplaceAll(input, "u", "ㅕ")
+	input = strings.ReplaceAll(input, "v", "ㅍ")
+	input = strings.ReplaceAll(input, "w", "ㅈ")
+	input = strings.ReplaceAll(input, "x", "ㅌ")
+	input = strings.ReplaceAll(input, "y", "ㅛ")
+	input = strings.ReplaceAll(input, "z", "ㅋ")
+	return input
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1020,8 +1060,6 @@ func English(input string) (bool, string) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Japanese(input string) (bool, string) {
-	input = DEL_J(input)
-	input = After(input)
 	for _, item := range cache.Japanese {
 		if strings.Contains(input, item) {
 			return true, item
@@ -1042,8 +1080,6 @@ func Japanese(input string) (bool, string) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Chinese(input string) (bool, string) {
-	input = DEL_J(input)
-	input = After(input)
 	for _, item := range cache.Chinese {
 		if strings.Contains(input, item) {
 			return true, item
@@ -1063,8 +1099,6 @@ func Chinese(input string) (bool, string) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Special(input string) (bool, string) {
-	input = DEL_J(input)
-	input = After(input)
 	for _, item := range cache.Emoji {
 		if strings.Contains(input, item) {
 			return true, item
