@@ -127,6 +127,7 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "口ㅣ ", "미")
 	unicode = strings.ToLower(unicode)
 	unicode = Clean(unicode)
+	unicode = CombineHangul(unicode)
 	return unicode
 }
 
@@ -164,6 +165,58 @@ func DEL_J(input string) string {
 	input = strings.ReplaceAll(input, "ㅢ", "")
 	input = strings.ReplaceAll(input, "ㆎ", "")
 	return input
+}
+
+func CombineHangul(jamo string) string {
+	var result []rune
+	var currentChoseong rune
+	var currentJungseong rune
+	var currentJongseong rune
+	choseongUnicode := map[rune]int{
+		'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
+		'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16,
+		'ㅍ': 17, 'ㅎ': 18,
+	}
+	jungseongUnicode := map[rune]int{
+		'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
+		'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16,
+		'ㅠ': 17, 'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20,
+	}
+	jongseongUnicode := map[rune]int{
+		0: 0, 'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8,
+		'ㄺ': 9, 'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16,
+		'ㅂ': 17, 'ㅃ': 18, 'ㅄ': 19, 'ㅅ': 20, 'ㅆ': 21, 'ㅇ': 22, 'ㅈ': 23, 'ㅉ': 24,
+		'ㅊ': 25, 'ㅋ': 26, 'ㅌ': 27, 'ㅍ': 28, 'ㅎ': 29,
+	}
+	for _, char := range jamo {
+		if _, ok := choseongUnicode[char]; ok {
+			if currentJungseong != 0 {
+				hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
+				result = append(result, rune(hangul))
+				currentChoseong = 0
+				currentJungseong = 0
+				currentJongseong = 0
+			}
+			currentChoseong = char
+		} else if _, ok := jungseongUnicode[char]; ok {
+			if currentJungseong != 0 {
+				hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
+				result = append(result, rune(hangul))
+				currentJongseong = 0
+			}
+			currentJungseong = char
+		} else if _, ok := jongseongUnicode[char]; ok {
+			currentJongseong = char
+		} else {
+			result = append(result, char)
+		}
+	}
+	if currentJungseong != 0 {
+		hangul := 0xAC00 + choseongUnicode[currentChoseong]*21*28 + jungseongUnicode[currentJungseong]*28 + jongseongUnicode[currentJongseong]
+		result = append(result, rune(hangul))
+	}
+
+	return string(result)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -917,6 +970,22 @@ func Politics(input string) (bool, string) {
 		}
 	}
 	return false, ""
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 영어관련 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func English(input string) (bool, string) {
+	newtext := ChangeUnicode(input)
+	prof := NewProfanity(cache.English)
+	return prof.Censor(newtext)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
