@@ -236,19 +236,9 @@ func EtoK(input string) string {
 	return input
 }
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 일반적인 비속어 감지 및 결과 반환 함수
-// 입력:
-//
-//	input: 비속어가 포함될 수 있는 문자열.
-//
-// 출력:
-//
-//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
-//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
-func General(input string, continues bool) (bool, []IndexOF) {
+func CList(list []string, types int, input string, continues bool) (bool, []IndexOF) {
 	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
+	for _, item := range list {
 		in := strings.Index(input, item)
 		if in != -1 {
 			indexs = append(indexs, IndexOF{
@@ -267,6 +257,20 @@ func General(input string, continues bool) (bool, []IndexOF) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 일반적인 비속어 감지 및 결과 반환 함수
+// 입력:
+//
+//	input: 비속어가 포함될 수 있는 문자열.
+//
+// 출력:
+//
+//	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
+//	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
+func General(input string, continues bool) (bool, []IndexOF) {
+	return CList(cache.General, DGeneral, input, continues)
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 사소한 비속어 감지 및 결과 반환 함수
 // 입력:
 //
@@ -277,23 +281,7 @@ func General(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Minor(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DMinor,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Minor, DMinor, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -307,23 +295,7 @@ func Minor(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Sexual(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DSexual,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Sexual, DSexual, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -337,23 +309,7 @@ func Sexual(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Belittle(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DBelittle,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Belittle, DBelittle, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -367,24 +323,7 @@ func Belittle(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Race(input string, continues bool) (bool, []IndexOF) {
-	input = strings.ReplaceAll(input, "흑형님", "")
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DRace,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Race, DRace, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -398,23 +337,7 @@ func Race(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Parent(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DParent,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Parent, DParent, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -428,23 +351,7 @@ func Parent(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Politics(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DPolitics,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Politics, DPolitics, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -486,23 +393,7 @@ func English(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Japanese(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DJapanese,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Japanese, DJapanese, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -516,23 +407,7 @@ func Japanese(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Chinese(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DChinese,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Chinese, DChinese, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -545,23 +420,7 @@ func Chinese(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func Special(input string, continues bool) (bool, []IndexOF) {
-	indexs := make([]IndexOF, 0)
-	for _, item := range cache.General {
-		in := strings.Index(input, item)
-		if in != -1 {
-			indexs = append(indexs, IndexOF{
-				Swear: item,
-				Type:  DSpecial,
-				Start: in,
-				End:   in + len(item),
-			})
-			if !continues {
-				return true, indexs
-			}
-		}
-	}
-
-	return false, indexs
+	return CList(cache.Emoji, DSpecial, input, continues)
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -681,8 +540,9 @@ func Check(input string) CheckInfo {
 	}
 
 	return CheckInfo{
-		Detect: false,
-		Swear:  make([]IndexOF, 0),
+		Detect:  false,
+		NewText: input,
+		Swear:   make([]IndexOF, 0),
 	}
 }
 
