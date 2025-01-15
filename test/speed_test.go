@@ -15,5 +15,5 @@ func Benchmark0(b *testing.B) {
 }
 
 func Test0(t *testing.T) {
-	fmt.Println(korcen.Check("kill"))
+	fmt.Println(korcen.Check("gpdmdmd"))
 }
