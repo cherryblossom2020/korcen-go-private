@@ -4,16 +4,11 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/fluffy-melli/korcen-go/cache"
 	"github.com/gyarang/gohangul"
 )
 
 func ChangeUnicode(unicode string) string {
 	//unicode = strings.ToLower(unicode)
-	unicode = RemoveDomain(unicode)
-	unicode = RemoveDuplicate(unicode)
-	unicode = RemoveNumber(unicode)
-	unicode = EnglishToKo(unicode)
 	unicode = strings.ReplaceAll(unicode, "ㅿ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
@@ -123,6 +118,11 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "b", "ㅂ")
 	unicode = strings.ReplaceAll(unicode, "u", "ㅂ")
 	unicode = strings.ReplaceAll(unicode, "v", "ㅂ")
+	unicode = RemoveDomain(unicode)
+	unicode = RemoveDuplicate(unicode)
+	unicode = RemoveNumber(unicode)
+	unicode = RemoveEnglish(unicode)
+	unicode = EnglishToKo(unicode)
 	dism := gohangul.Disassemble(unicode)
 	unicode = gohangul.Assemble(dism)
 	unicode = PreGeneral(unicode)
@@ -226,33 +226,69 @@ func RemoveJ(input string) string {
 	return input
 }
 
-func EnglishToKo(input string) string {
-	var result strings.Builder
-	i := 0
-	for i < len(input) {
-		if cache.Regexinitial.MatchString(string(input[i])) {
-			initial := cache.KRinitial[string(input[i])]
-			i++
-			if i < len(input) && cache.Regexmedial.MatchString(string(input[i])) {
-				medial := cache.KRmedial[string(input[i])]
-				i++
-				if i < len(input) && cache.Regexfinal.MatchString(string(input[i])) {
-					final := cache.KRfinal[string(input[i])]
-					result.WriteString(initial + medial + final)
-					i++
-				} else {
-					result.WriteString(initial + medial)
-				}
-			} else {
-				result.WriteString(string(input[i-1]))
-			}
-		} else {
-			result.WriteString(string(input[i]))
-			i++
-		}
-	}
+func RemoveEnglish(input string) string {
+	input = strings.ReplaceAll(input, "cat", "")
+	input = strings.ReplaceAll(input, "status", "")
+	return input
+}
 
-	return result.String()
+//func EnglishToKo(input string) string {
+//	var result strings.Builder
+//	runes := []rune(input)
+//	i := 0
+//	for i < len(runes) {
+//		ch := runes[i]
+//		if isEnglishLetter(ch) {
+//			if cache.Regexinitial.MatchString(string(ch)) {
+//				initial := cache.KRinitial[string(ch)]
+//				i++
+//				if i < len(runes) && cache.Regexmedial.MatchString(string(runes[i])) {
+//					medial := cache.KRmedial[string(runes[i])]
+//					i++
+//					if i < len(runes) && cache.Regexfinal.MatchString(string(runes[i])) {
+//						final := cache.KRfinal[string(runes[i])]
+//						result.WriteString(initial + medial + final)
+//						i++
+//					} else {
+//						result.WriteString(initial + medial)
+//					}
+//				} else {
+//					result.WriteString(string(runes[i-1]))
+//				}
+//			}
+//		} else {
+//			result.WriteString(string(ch))
+//			i++
+//		}
+//	}
+//
+//	return result.String()
+//}
+
+func EnglishToKo(input string) string {
+	input = strings.ReplaceAll(input, "a", "ㅁ")
+	input = strings.ReplaceAll(input, "c", "ㅊ")
+	input = strings.ReplaceAll(input, "d", "ㅇ")
+	input = strings.ReplaceAll(input, "e", "ㄷ")
+	input = strings.ReplaceAll(input, "f", "ㄹ")
+	input = strings.ReplaceAll(input, "g", "ㅎ")
+	input = strings.ReplaceAll(input, "h", "ㅗ")
+	input = strings.ReplaceAll(input, "i", "ㅑ")
+	input = strings.ReplaceAll(input, "j", "ㅓ")
+	input = strings.ReplaceAll(input, "k", "ㅏ")
+	input = strings.ReplaceAll(input, "l", "ㅣ")
+	input = strings.ReplaceAll(input, "m", "ㅡ")
+	input = strings.ReplaceAll(input, "n", "ㅜ")
+	input = strings.ReplaceAll(input, "p", "ㅔ")
+	input = strings.ReplaceAll(input, "q", "ㅂ")
+	input = strings.ReplaceAll(input, "r", "ㄱ")
+	input = strings.ReplaceAll(input, "s", "ㄴ")
+	input = strings.ReplaceAll(input, "t", "ㅅ")
+	input = strings.ReplaceAll(input, "w", "ㅈ")
+	input = strings.ReplaceAll(input, "x", "ㅌ")
+	input = strings.ReplaceAll(input, "y", "ㅛ")
+	input = strings.ReplaceAll(input, "z", "ㅋ")
+	return input
 }
 
 func RemoveNumber(input string) string {

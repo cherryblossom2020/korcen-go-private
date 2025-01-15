@@ -245,7 +245,7 @@ func Special(input string, continues bool) (bool, []IndexOF) {
 func Check(input string) CheckInfo {
 	var detect bool
 	var swear []IndexOF
-	detect, swear = English(input, false)
+	detect, swear = English(strings.ToLower(input), false)
 	if detect {
 		return CheckInfo{
 			Detect:  true,
