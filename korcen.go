@@ -60,9 +60,8 @@ func CList(list []string, types int, input string, continues bool) (bool, []Inde
 		item = KoToEnglish(item)
 		in = strings.Index(input, item)
 		if in != -1 {
-			item = EnglishToKo(item)
 			indexs = append(indexs, IndexOF{
-				Swear: item,
+				Swear: EnglishToKo(item),
 				Type:  types,
 				Start: in,
 				End:   in + len(item),
