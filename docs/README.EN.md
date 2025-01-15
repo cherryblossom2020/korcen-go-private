@@ -1,8 +1,8 @@
 <div align="center">
   <h1>Korcen.go</h1>
 
-  ![Go Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/go_version.svg)
-  ![Module Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/module_version.svg)
+  [![Go Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/go_version.svg)](https://go.dev/)
+  [![Module Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/module_version.svg)](https://pkg.go.dev/github.com/fluffy-melli/korcen-go)
 </div>
 <div align="center">
   <h3>
@@ -19,16 +19,26 @@
 ```
 https://github.com/Tanat05/korcen
 ---------------------------------
-This project is a modified version of the original `korcen` project.
-The original project can be found at `https://github.com/Tanat05/korcen`.
+This project is a modified version of the original `korcen`
+The original project can be found at `https://github.com/Tanat05/korcen`
 
 This project also follows the Apache-2.0 license.
 ```
+
+>[gyarang](https://github.com/gyarang) / [gohangul](https://github.com/gyarang/gohangul)
+```
+https://github.com/gyarang/gohangul
+-----------------------------------
+This project is distributed using `gohangul`
+You can find the project at `https://github.com/gyarang/gohangul`
+
+It also follows the MIT License, which is the license for the respective project.
+```
+
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
-The korcen-go project follows the Apache-2.0 license. If you use the code, please comply with the terms of the license.
-
-- License and copyright notices must be displayed (in areas accessible to the general public).
+`korcen-go `follows both the `Apache-2.0` and `MIT License` licenses.
+Please comply with the license terms when using the code.
 
 Copyright© All rights reserved.
 
@@ -58,9 +68,10 @@ Copyright© All rights reserved.
 >mod
 ```sh
 $ go get github.com/fluffy-melli/korcen-go
+L Since version 0.7.0, the function output has changed, so please be cautious when using it.
 ```
 
->golang
+>golang code example
 ```go
 package main
 
@@ -71,6 +82,14 @@ import (
 )
 
 func main() {
-	fmt.Println(korcen.Check(""))
+	// Discord Message Event Logic
+	ck := korcen.Check("MESSAGE")
+	if ck.Detect {
+		dtif := ck.Swear[0]
+		message := ck.NewText[:dtif.Start] + "\x1b[1m\x1b[41m\"" + ck.NewText[dtif.Start:dtif.End] + "\"\x1b[0m" + ck.NewText[dtif.End:]
+		discord_ansi := "```ansi\n" + message + "\n```"
+		fmt.Println(discord_ansi)
+	}
+	// Discord Send Logic
 }
 ```

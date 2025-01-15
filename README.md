@@ -29,15 +29,16 @@ https://github.com/Tanat05/korcen
 ```
 https://github.com/gyarang/gohangul
 -----------------------------------
-이 프로젝트는 원본 `gohangul` 을 사용해서 배포한 것입니다.
-원본 프로젝트는 `https://github.com/gyarang/gohangul`에서 확인할 수 있습니다.
+이 프로젝트는 `gohangul` 을 사용해서 배포한 것입니다.
+해당 프로젝트는 `https://github.com/gyarang/gohangul`에서 확인할 수 있습니다.
 
 해당 프로젝트의 라이센스인 MIT License 또한 따르고 있습니다
 ```
 
 ![Apache-2.0](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/Apache-2.0.png)
 
-`korcen-go`는 `Apache-2.0` & `MIT License` 라이선스를 모두 따르고 있습니다. 코드를 사용할 경우 라이선스 내용을 준수해주세요. 
+`korcen-go`는 `Apache-2.0` & `MIT License` 라이선스를 `모두` 따르고 있습니다.
+코드를 사용할 경우 라이선스 내용을 준수해주세요. 
 
 Copyright© All rights reserved.
 
@@ -70,7 +71,7 @@ $ go get github.com/fluffy-melli/korcen-go
 L v0.7.0 버전 이후로 함수 출력이 달라졌으므로 사용시에 유의해주시기 바랍니다
 ```
 
->golang
+>golang 코드 예제
 ```go
 package main
 
