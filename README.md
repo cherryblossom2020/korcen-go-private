@@ -1,8 +1,8 @@
 <div align="center">
   <h1>Korcen.go</h1>
 
-  ![Go Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/go_version.svg)
-  ![Module Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/module_version.svg)
+  [![Go Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/go_version.svg)](https://go.dev/)
+  [![Module Version](https://github.com/fluffy-melli/korcen-go/blob/main/docs/asset/module_version.svg)](https://pkg.go.dev/github.com/fluffy-melli/korcen-go)
 </div>
 <div align="center">
   <h3>
