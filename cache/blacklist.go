@@ -1,5 +1,10 @@
 package cache
 
+import "sync"
+
+var BlacklistMu = sync.RWMutex{}
+var Blacklist = map[string]string{}
+
 var General = &[]string{
 	"닥쳐", "닭쳐", "닥치라", "아가리해", "dog새", "개ㅐ색", "개같", "개가튼", "개쉑", "개스키", "개세끼", "개색히", "개가뇬", "개새기", "개쌔기", "개쌔끼",
 	"쌖", "쎆", "새긔", "개소리", "개년", "개소리", "뻑유", "뻐킹", "뻐큐", "빡큐", "뿩큐", "뻑큐", "빡유", "뻒큐",

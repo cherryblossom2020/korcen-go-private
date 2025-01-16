@@ -4,6 +4,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/fluffy-melli/korcen-go/cache"
 	"github.com/gyarang/gohangul"
 )
 
@@ -256,6 +257,13 @@ func RemoveEnglish(input string) string {
 }
 
 func KoToEnglish(input string) string {
+	cache.BlacklistMu.Lock()
+	van := input
+	val, ex := cache.Blacklist[input]
+	cache.BlacklistMu.Unlock()
+	if ex {
+		return val
+	}
 	dism := gohangul.Disassemble(input)
 	input = string(dism)
 	input = strings.ReplaceAll(input, "ㅁ", "a")
@@ -284,6 +292,9 @@ func KoToEnglish(input string) string {
 	input = strings.ReplaceAll(input, "ㅌ", "x")
 	input = strings.ReplaceAll(input, "ㅛ", "y")
 	input = strings.ReplaceAll(input, "ㅋ", "z")
+	cache.BlacklistMu.Lock()
+	cache.Blacklist[van] = input
+	cache.BlacklistMu.Unlock()
 	return input
 }
 
