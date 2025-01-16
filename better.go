@@ -11,9 +11,9 @@ type Profanity struct {
 	MaxCombinations int
 }
 
-func NewProfanity(words []string) *Profanity {
+func NewProfanity(words *[]string) *Profanity {
 	censorWords := make(map[string]bool)
-	for _, word := range words {
+	for _, word := range *words {
 		censorWords[strings.ToLower(word)] = true
 	}
 	charMapping := map[rune][]rune{
