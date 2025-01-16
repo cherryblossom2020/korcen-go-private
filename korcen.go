@@ -58,6 +58,9 @@ func CList(list []string, types int, input string, continues bool) (bool, []Inde
 			}
 		}
 		item = KoToEnglish(item)
+		if len(item) <= 1 {
+			continue
+		}
 		in = strings.Index(input, item)
 		if in != -1 {
 			indexs = append(indexs, IndexOF{
@@ -184,13 +187,12 @@ func Politics(input string, continues bool) (bool, []IndexOF) {
 //	bool: 비속어가 포함된 경우 true, 그렇지 않으면 false.
 //	string: 감지된 비속어가 있으면 해당 비속어를, 없으면 빈 문자열("")을 반환.
 func English(input string, continues bool) (bool, []IndexOF) {
-	newtext := ChangeUnicode(input)
 	prof := NewProfanity(cache.English)
-	df, pr := prof.Censor(newtext)
+	df, pr := prof.Censor(input)
 	if !df {
 		return false, make([]IndexOF, 0)
 	}
-	in := strings.Index(newtext, pr)
+	in := strings.Index(input, pr)
 	return true, []IndexOF{
 		{
 			Swear: pr,

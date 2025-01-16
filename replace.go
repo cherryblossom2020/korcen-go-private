@@ -9,6 +9,7 @@ import (
 
 func ChangeUnicode(unicode string) string {
 	//unicode = strings.ToLower(unicode)
+	unicode = RemoveDomain(unicode)
 	unicode = strings.ReplaceAll(unicode, "ㅿ", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
 	unicode = strings.ReplaceAll(unicode, "^", "ㅅ")
@@ -118,10 +119,10 @@ func ChangeUnicode(unicode string) string {
 	unicode = strings.ReplaceAll(unicode, "b", "ㅂ")
 	unicode = strings.ReplaceAll(unicode, "u", "ㅂ")
 	unicode = strings.ReplaceAll(unicode, "v", "ㅂ")
-	unicode = RemoveDomain(unicode)
 	unicode = RemoveDuplicate(unicode)
 	unicode = RemoveNumber(unicode)
 	unicode = RemoveEnglish(unicode)
+	unicode = After(unicode)
 	dism := gohangul.Disassemble(unicode)
 	unicode = gohangul.Assemble(dism)
 	unicode = PreGeneral(unicode)
@@ -130,7 +131,6 @@ func ChangeUnicode(unicode string) string {
 	unicode = PreBelittle(unicode)
 	unicode = PrePolitics(unicode)
 	unicode = RemoveJ(unicode)
-	unicode = After(unicode)
 	return unicode
 }
 
@@ -187,6 +187,7 @@ func RemoveDomain(input string) string {
 	input = strings.ReplaceAll(input, ".me", "")
 	input = strings.ReplaceAll(input, ".xyz", "")
 	input = strings.ReplaceAll(input, ".online", "")
+	input = strings.ReplaceAll(input, "?v=", "")
 	return input
 }
 
@@ -226,43 +227,31 @@ func RemoveJ(input string) string {
 }
 
 func RemoveEnglish(input string) string {
+	input = strings.ReplaceAll(input, "ha", "")
+	input = strings.ReplaceAll(input, "hi", "")
+	input = strings.ReplaceAll(input, "hag", "")
+	input = strings.ReplaceAll(input, "ham", "")
+	input = strings.ReplaceAll(input, "hat", "")
+	input = strings.ReplaceAll(input, "hem", "")
+	input = strings.ReplaceAll(input, "her", "")
+	input = strings.ReplaceAll(input, "hex", "")
+	input = strings.ReplaceAll(input, "hic", "")
+	input = strings.ReplaceAll(input, "him", "")
+	input = strings.ReplaceAll(input, "his", "")
+	input = strings.ReplaceAll(input, "hiv", "")
+	input = strings.ReplaceAll(input, "hmo", "")
+	input = strings.ReplaceAll(input, "hod", "")
+	input = strings.ReplaceAll(input, "hog", "")
+	input = strings.ReplaceAll(input, "hot", "")
+	input = strings.ReplaceAll(input, "hub", "")
+	input = strings.ReplaceAll(input, "hug", "")
+	input = strings.ReplaceAll(input, "hum", "")
+	input = strings.ReplaceAll(input, "ssh", "")
 	input = strings.ReplaceAll(input, "cat", "")
+	input = strings.ReplaceAll(input, "watch", "")
 	input = strings.ReplaceAll(input, "status", "")
 	return input
 }
-
-//func EnglishToKo(input string) string {
-//	var result strings.Builder
-//	runes := []rune(input)
-//	i := 0
-//	for i < len(runes) {
-//		ch := runes[i]
-//		if isEnglishLetter(ch) {
-//			if cache.Regexinitial.MatchString(string(ch)) {
-//				initial := cache.KRinitial[string(ch)]
-//				i++
-//				if i < len(runes) && cache.Regexmedial.MatchString(string(runes[i])) {
-//					medial := cache.KRmedial[string(runes[i])]
-//					i++
-//					if i < len(runes) && cache.Regexfinal.MatchString(string(runes[i])) {
-//						final := cache.KRfinal[string(runes[i])]
-//						result.WriteString(initial + medial + final)
-//						i++
-//					} else {
-//						result.WriteString(initial + medial)
-//					}
-//				} else {
-//					result.WriteString(string(runes[i-1]))
-//				}
-//			}
-//		} else {
-//			result.WriteString(string(ch))
-//			i++
-//		}
-//	}
-//
-//	return result.String()
-//}
 
 func KoToEnglish(input string) string {
 	dism := gohangul.Disassemble(input)
