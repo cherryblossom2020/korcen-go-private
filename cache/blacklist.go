@@ -1,6 +1,10 @@
 package cache
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/google/btree"
+)
 
 var BlacklistMu = sync.RWMutex{}
 var Blacklist = map[string]string{}
@@ -254,3 +258,73 @@ var Chinese = &[]string{
 var Emoji = &[]string{
 	"🖕🏻", "👌🏻👈🏻", "👉🏻👌🏻", "🤏🏻", "🖕", "🖕🏼", "🖕🏽", "🖕🏾", "🖕🏿", ":middle_finger:",
 }
+
+const (
+	DGeneral int = iota + 1
+	DMinor
+	DSexual
+	DBelittle
+	DRace
+	DParent
+	DPolitics
+	DEnglish
+	DJapanese
+	DChinese
+	DSpecial
+)
+
+type TrieNode struct {
+	children map[rune]*TrieNode
+	isEnd    bool
+}
+
+type Trie struct {
+	Root *TrieNode
+}
+
+func NewTrie() *Trie {
+	return &Trie{
+		Root: &TrieNode{
+			children: make(map[rune]*TrieNode),
+		},
+	}
+}
+
+func (t *Trie) Insert(word string) {
+	node := t.Root
+	for _, ch := range word {
+		if _, ok := node.children[ch]; !ok {
+			node.children[ch] = &TrieNode{children: make(map[rune]*TrieNode)}
+		}
+		node = node.children[ch]
+	}
+	node.isEnd = true
+}
+
+func (t *Trie) Search(word string) bool {
+	node := t.Root
+	for _, ch := range word {
+		if _, ok := node.children[ch]; !ok {
+			return false
+		}
+		node = node.children[ch]
+	}
+	return node.isEnd
+}
+
+type WordEntry struct {
+	Word  string
+	WType int
+}
+
+func (w WordEntry) Less(than btree.Item) bool {
+	return w.Word < than.(WordEntry).Word
+}
+
+var (
+	ProfanityTrie = NewTrie()
+
+	BTree = btree.New(8)
+
+	Mu sync.RWMutex
+)

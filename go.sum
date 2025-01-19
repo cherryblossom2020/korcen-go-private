@@ -1,2 +1,4 @@
+github.com/google/btree v1.1.3 h1:CVpQJjYgC4VbzxeGVHfvZrv1ctoYCAI8vbl07Fcxlyg=
+github.com/google/btree v1.1.3/go.mod h1:qOPhT0dTNdNzV6Z/lhRX0YXUafgPLFUh+gZMl761Gm4=
 github.com/gyarang/gohangul v0.1.3 h1:UV5TCR2+XheNr+q79nJoHCzDyUow4Z/AmOqxZqm3SvQ=
 github.com/gyarang/gohangul v0.1.3/go.mod h1:EzJMLXEkhFBcEgmMNklqj6vlZh+cBv4AzAcyz7KU2Mw=
