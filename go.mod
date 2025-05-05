@@ -1,4 +1,4 @@
-module github.com/cherryblossom2020/korcen-go-private/edit/main/go.mod
+module github.com/cherryblossom2020/korcen-go-private
 
 go 1.20
 
