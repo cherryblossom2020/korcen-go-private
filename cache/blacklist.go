@@ -49,7 +49,7 @@ var General = &[]string{
 	"시bal", "시val", "시bar", "시bak", "시pal", "시qk", "시bal", "시val", "시bar", "시bak", "시pal", "시qk",
 	"si바", "si발", "si불", "si빨", "si팔", "tl바", "tl발", "tl불", "tl빨", "tl팔",
 	"siba", "tlba", "siva", "tlva", "tlqkf", "10발놈", "10발년", "tlqkd", "si8", "10R놈", "시8", "십8", "s1bal", "sib알", "씨x", "siㅂ",
-	"tq", "qt",
+	"tq", "qt", "이년", "저년", "찐따", "장애", "아가리", "쌉쳐", 
 }
 
 var Minor = &[]string{
