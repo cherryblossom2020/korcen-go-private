@@ -4,7 +4,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/fluffy-melli/korcen-go/cache"
+	"github.com/cherryblossom2020/korcen-go-private/cache"
 	"github.com/gyarang/gohangul"
 )
 
